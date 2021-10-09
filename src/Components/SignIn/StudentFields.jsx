@@ -12,7 +12,7 @@ import {
     NumberInputField,
     NumberInputStepper,
     NumberIncrementStepper,
-    NumberDecrementStepper,
+    NumberDecrementStepper
 } from "@chakra-ui/react"
 export const StudentFields = (props) => (
     <FormControl id="first-name" isRequired>

@@ -8,7 +8,7 @@ const db = new Firestore({
 export function filterMajor(major)
 {
     const usersRef = db.collection('users');
-    const query = await usersRef
+    const query = usersRef
       .collection("users")
       .where('major', '==', major)
       .where('type', '==', 'college')
@@ -30,7 +30,7 @@ export function filterMajor(major)
 export function filterCollege(college)
 {
     const usersRef = db.collection('users');
-    const query = await usersRef
+    const query = usersRef
       .collection("users")
       .where('college', '==', college)
       .where('type', '==', 'college')
@@ -52,7 +52,7 @@ export function filterCollege(college)
 export function filterName(name)
 {
     const usersRef = db.collection('users');
-    const query = await usersRef
+    const query = usersRef
       .collection("users")
       .where('type', '==', 'college')
       .get();
@@ -73,10 +73,10 @@ export function filterName(name)
     }
 }
 
-function getRecommended(collegeList, major)
+export function getRecommended(collegeList, major)
 {
   const usersRef = db.collection('users');
-    const query = await usersRef
+    const query = usersRef
       .collection("users")
       .where('type', '==', 'college')
       .where('major', '==', major)
@@ -97,7 +97,7 @@ function getRecommended(collegeList, major)
     }
 }
 
-function shuffle(array) {
+export function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
   while (currentIndex != 0) {
@@ -111,5 +111,3 @@ function shuffle(array) {
 
   return array;
 }
-
-export default utils

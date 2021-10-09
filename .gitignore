@@ -22,7 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/src/unify-328418-c8687e44be6e.json
-
 .vscode/
-src/firebase.js
+src/unify-328418-c8687e44be6e.json
