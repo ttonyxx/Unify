@@ -45,12 +45,7 @@ function StudentDashboard() {
       flexDirection='column'
       padding='0 10rem 0 10rem'
     >
-      <Text 
-        fontSize="3xl"
-        padding='3rem 0 3rem 0'
-      >
-        Welcome, {user ? user.displayName.split(" ")[0] : ""}.
-      </Text>
+        <Text fontSize="4xl" padding='3rem 0 3rem 0'>Welcome, {user ? user.displayName.split(" ")[0] : ""} 👋</Text>
       <Table>
         <Thead>
           <Tr>

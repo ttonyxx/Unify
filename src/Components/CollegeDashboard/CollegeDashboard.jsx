@@ -67,7 +67,7 @@ function CollegeDashboard() {
 
   return (
     <div className="dashboard">
-        <Text fontSize="6xl">Welcome, Tony 👋</Text>
+        <Text fontSize="6xl">Welcome, {user ? user.displayName.split(" ")[0] : ""} 👋</Text>
         <Text mt={5} fontSize="4xl">Your balance is <Badge mb={0.5} fontSize="0.8em" colorScheme="green">{ balance }</Badge></Text>
         
         <Box borderRadius="md" borderWidth="1px" p={4} mt="4">
