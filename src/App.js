@@ -5,12 +5,14 @@ import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
 import { Route , Switch } from "react-router-dom";
 import React from "react"
+import Logo from '../src/assets/HackHarvardLogo.png'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Unify
+        <img src={Logo} height="5%" width="5%" align="left"/>
+        nify
       </header>
         <Switch>
           <Route path="/signin" component={SignIn}/>

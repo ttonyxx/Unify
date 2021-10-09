@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth , signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 import {
   Box,
   Button,
@@ -16,7 +17,6 @@ import { Card } from './Card'
 import { DividerWithText } from './DividerWithText'
 import { LinkComp } from './LinkComp'
 import { LoginForm } from './LoginForm'
-import { Logo } from './Logo'
 
 function SignIn() {
   // const [email, setEmail] = useState("");
@@ -37,9 +37,9 @@ bg={useColorModeValue('gray.50', 'inherit')}
 minH="100vh"
 py="12"
 px={{ base: '4', lg: '8' }}
+
 >
 <Box maxW="md" mx="auto">
-  <Logo mx="auto" h="8" mb={{ base: '10', md: '20' }} />
   <Heading textAlign="center" size="xl" fontWeight="extrabold">
     Sign in to your account
   </Heading>
