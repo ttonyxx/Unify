@@ -12,9 +12,10 @@ const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
   const [location] = useState(useLocation());
 
-  console.log(location.pathname)
   useEffect(() => {
-    
+    if (location.pathname == '/signin') {
+
+    }
   }, [user, loading]);
 
   return (
@@ -35,12 +36,12 @@ const Navbar = () => {
         margin="1rem 0.5rem 1rem 0rem"
       />
       <Spacer />
-      {user ?
+      {user && location.pathname != '/signin' ?
         (<Link to='/dashboard'>
           Dashboard
         </Link>) : (<></>)
       }
-      {user ? 
+      {user && location.pathname != '/signin' ? 
         (<Button 
           onClick={logout}
           color='black'
