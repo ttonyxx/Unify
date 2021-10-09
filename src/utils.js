@@ -22,6 +22,7 @@ function filterMajor(major)
         query.forEach(user => {
             array.push(user);
           });
+        shuffle(array)
         return array;
     }
 }
@@ -43,6 +44,7 @@ function filterCollege(college)
         query.forEach(user => {
             array.push(user);
           });
+        shuffle(array)
         return array;
     }
 }
@@ -66,8 +68,48 @@ function filterName(name)
                 array.push(user);
             }
           });
+        shuffle(array)
         return array;
     }
+}
+
+function getRecommended(collegeList, major)
+{
+  const usersRef = db.collection('users');
+    const query = await usersRef
+      .collection("users")
+      .where('type', '==', 'college')
+      .where('major', '==', major)
+      .where('college', 'in', collegeList)
+      .where()
+      .get();
+    if (query.empty) {
+    console.log('No matching documents.');
+    return;
+    }
+    else{
+        var array = [];
+        query.forEach(user => {
+            array.push(user)
+          });
+        shuffle(array)
+        return array;
+    }
+}
+
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  while (currentIndex != 0) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
 }
 
 export default utils
