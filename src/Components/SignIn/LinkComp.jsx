@@ -1,7 +1,7 @@
 import { chakra, useColorModeValue } from '@chakra-ui/system'
 import * as React from 'react'
 
-export const Link = (props) => (
+export const LinkComp = (props) => (
   <chakra.a
     marginStart="1"
     href="#"
