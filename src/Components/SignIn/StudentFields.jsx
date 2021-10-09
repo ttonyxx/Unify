@@ -20,11 +20,13 @@ import {
 import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
 import { addUser } from "../../utils"
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const StudentFields = (props) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const handleSubmit = event => {
+    const history = useHistory();
+    const handleSubmit = (event) => {
         let user = {
             firstName: firstName,
             lastName: lastName,
@@ -35,9 +37,12 @@ export const StudentFields = (props) => {
             state: 'California',
             highSchool: '',
             collegeList: [],
-            majorList: []
+            majorList: [],
+            imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
         }
         addUser(user)
+        
+        history.replace("/dashboard")
     };
     return(
     <FormControl onSubmit={handleSubmit}>

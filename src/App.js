@@ -28,8 +28,10 @@ function App() {
     if (!user) history.replace("/signin");
     else {
       getUser(user.email).then((value) => {
-        setType(value.type);
-        setLoaded(true)
+        if (value) {
+          setType(value.type);
+          setLoaded(true)
+        }
       })
     }
   }, [user, loading]);
