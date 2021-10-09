@@ -15,13 +15,12 @@ import { Logo } from './Logo';
 import StudentDashboard from './Components/StudentDashboard/StudentDashboard'
 import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
+import Navbar from './Components/Navbar/Navbar';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <header className="App-header">
-        Unify
-      </header>
+      <Navbar />
       <Switch>
         <Route path="/signin" component={SignIn}/>
         <Route path="/dashboard" component={StudentDashboard}/>
