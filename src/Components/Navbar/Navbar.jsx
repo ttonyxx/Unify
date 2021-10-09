@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Image } from "@chakra-ui/image";
 import { Box, Flex, Spacer } from "@chakra-ui/layout";
 import Logo from '../../assets/hhl.svg'
@@ -5,9 +6,16 @@ import { Link } from 'react-router-dom';
 import { GetAuthInfo } from '../Hooks/getData';
 import { logout } from "../../firebase";
 import { Button, Avatar } from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
+  const [location] = useState(useLocation());
+
+  console.log(location.pathname)
+  useEffect(() => {
+    
+  }, [user, loading]);
 
   return (
     <Flex 
@@ -40,8 +48,8 @@ const Navbar = () => {
           Logout
           <Avatar
             size="xs"
-            name="Kola Tioluwani"
-            src="https://bit.ly/tioluwani-kolawole"
+            ml={1}
+            src={user.photoURL}
           />{" "}
         </Button>) : 
         (<Link to='/signin'>
