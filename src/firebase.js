@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider } from "firebase/auth";
-import Firestore from "@google-cloud/firestore";
+//import Firestore from "@google-cloud/firestore";
 import { getAuth, signInWithPopup } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,10 +21,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = new Firestore({
-    projectId: 'unify-ee0a5',
-    keyFilename: 'unify-328418-c8687e44be6e.json',
-});
+// const db = new Firestore({
+//     projectId: 'unify-ee0a5',
+//     keyFilename: 'unify-328418-c8687e44be6e.json',
+// });
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -84,12 +84,12 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     try {
         const res = await auth.createUserWithEmailAndPassword(email, password);
         const user = res.user;
-        await db.collection("users").add({
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email,
-        });
+        // await db.collection("users").add({
+        // uid: user.uid,
+        // name,
+        // authProvider: "local",
+        // email,
+        // });
     } catch (err) {
         console.error(err);
         alert(err.message);
@@ -111,7 +111,7 @@ const logout = () => {
 
 export {
     auth,
-    db,
+    //db,
     signInWithGoogle,
     signInWithEmailAndPassword,
     registerWithEmailAndPassword,

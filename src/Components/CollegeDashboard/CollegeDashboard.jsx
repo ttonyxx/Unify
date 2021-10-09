@@ -24,40 +24,45 @@ function CollegeDashboard() {
       firstName: "Tony",
       lastName: "Xin",
       highschool: "Mountain View High School",
-      grade: "Freshman"
+      grade: "Freshman",
+      major: "Physics"
     },
     {
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
       highschool: "Mountain View High School",
-      grade: "Freshman"
+      grade: "Freshman",
+      major: "CS"
     },
     {
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
       highschool: "Mountain View High School",
-      grade: "Freshman"
+      grade: "Freshman",
+      major: "Philosophy"
     },
     {
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
       highschool: "Mountain View High School",
-      grade: "Freshman"
+      grade: "Freshman",
+      major: "History"
     },
     {
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
-      firstName: "Tony",
-      lastName: "Xin",
+      firstName: "Brendan",
+      lastName: "Wong",
       highschool: "Mountain View High School",
-      grade: "Freshman"
+      grade: "Freshman",
+      major: "Math"
     },
   ]
 
   const clientItems = clientData.map((client) => 
-  <StudentBox imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.highschool} grade={client.grade}></StudentBox>
+  <StudentBox imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.highschool} grade={client.grade} major={client.major}></StudentBox>
   )
 
   return (
@@ -67,6 +72,13 @@ function CollegeDashboard() {
         
         <Box borderRadius="md" borderWidth="1px" p={4} mt="4">
             <Tag fontSize="3xl" colorScheme="gray" mb={2}>Clients</Tag>
+            <HStack spacing="10px">
+                {clientItems}
+            </HStack>
+        </Box>
+
+        <Box borderRadius="md" borderWidth="1px" p={4} mt="4">
+            <Tag fontSize="3xl" colorScheme="gray" mb={2}>Connections</Tag>
             <HStack spacing="10px">
                 {clientItems}
             </HStack>
