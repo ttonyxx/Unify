@@ -9,11 +9,12 @@ export const AccountType = ({
 }) => (
   <Box
     as="section"
+    position = "static"
     bg={useColorModeValue('gray.50', 'gray.800')}
     py="67"
     px={{
-      base: '4',
-      md: '200',
+      base: '200px',
+      md: '200px',
     }}
   >
     <SimpleGrid
@@ -22,12 +23,12 @@ export const AccountType = ({
         lg: 2,
       }}
       spacing={{
-        base: '8',
-        lg: '100',
+        base: '8px',
+        lg: '100px',
       }}
       maxW="9xl"
       mx="auto"
-      justifyItems="right"
+      justifyItems="center"
       alignItems="center"
     >
       <PricingCard

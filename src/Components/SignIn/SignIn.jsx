@@ -4,6 +4,7 @@ import { auth , signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { LoginFields } from "./LoginFields";
 import { AccountType } from "./AccountType";
+import { StudentFields } from "./StudentFields";
 
 function SignIn() {
   // const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ function SignIn() {
     display = <AccountType setPage={setPage}></AccountType>
   }
   else if (page == 2) {
-    display = <h1>JOOOO</h1>
+    display = <StudentFields setPage={setPage}></StudentFields>
   }
 
   return (
