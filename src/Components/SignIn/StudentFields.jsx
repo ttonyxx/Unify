@@ -12,17 +12,45 @@ import {
     NumberInputField,
     NumberInputStepper,
     NumberIncrementStepper,
-    NumberDecrementStepper
+    NumberDecrementStepper,
+    Button,
+    Flex,
+    Form
 } from "@chakra-ui/react"
-export const StudentFields = (props) => (
-    <FormControl id="first-name" isRequired>
-        <FormLabel>First name</FormLabel>
-        <Input placeholder="First name" />
-        <FormControl id="last-name" isRequired>
-            <FormLabel>Last name</FormLabel>
+import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
+import { addUser } from "../../utils"
+import React, { useState } from 'react';
+
+export const StudentFields = (props) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const handleSubmit = event => {
+        let user = {
+            firstName: firstName,
+            lastName: lastName,
+            type: 'high-school',
+            mobile: '612-932-3438',
+            email: 'julianglass@gmail.com',
+            year: 'Sophmore',
+            state: 'California',
+            highSchool: '',
+            collegeList: [],
+            majorList: []
+        }
+        addUser(user)
+    };
+    return(
+    <FormControl onSubmit={handleSubmit}>
+        <FormControl id="first-name" isRequired
+        onChange={event => setFirstName(event.currentTarget.value)}>
+            <FormLabel>First name</FormLabel>
             <Input placeholder="First name" />
         </FormControl>
-        <FormControl id="state">
+        <FormControl id="last-name" isRequired>
+            <FormLabel>Last name</FormLabel>
+            <Input placeholder="Last name" />
+        </FormControl>
+        <FormControl id="state" isRequired>
             <FormLabel>State</FormLabel>
             <Select placeholder="Select state">
                 <option>Alabama</option>
@@ -77,6 +105,27 @@ export const StudentFields = (props) => (
                 <option>Wyoming</option>
             </Select>
         </FormControl>
+        <FormControl id="high school" isRequired>
+            <FormLabel>High School</FormLabel>
+            <Input placeholder="Mountain View High School" />
+        </FormControl>
+        <FormControl id="grade" isRequired>
+            <FormLabel>Grade</FormLabel>
+            <Input placeholder="Senior" />
+        </FormControl>
+        <FormControl id="movile" isRequired>
+            <FormLabel>Phone Number</FormLabel>
+            <Input placeholder="123-456-7890" />
+        </FormControl>
+        <Flex
+            justifyContent = "center">
+            <Button 
+                mt={4}
+                colorScheme="teal"
+                isLoading={props.isSubmitting}
+                type="submit">
+                Signup
+            </Button>
+        </Flex>
     </FormControl>
-
-)
+    )}

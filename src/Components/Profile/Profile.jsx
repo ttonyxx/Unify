@@ -74,6 +74,7 @@ function Profile() {
                             Message
                         </Button>
                         <Button onClick={() => {
+                            //getUser('tonyxin@berkeley.edu').then((value) => console.log(value))
                         }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
                         </Button>
