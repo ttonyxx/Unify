@@ -20,6 +20,7 @@ function CollegeDashboard() {
 
   let clientData = [
     {
+      uid: "aw3f9a34",
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
@@ -28,6 +29,7 @@ function CollegeDashboard() {
       major: "Physics"
     },
     {
+      uid: "aw3f29a34",
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
@@ -36,6 +38,7 @@ function CollegeDashboard() {
       major: "CS"
     },
     {
+      uid: "aw3f9a7634",
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
@@ -44,6 +47,7 @@ function CollegeDashboard() {
       major: "Philosophy"
     },
     {
+      uid: "aw3f59a34",
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Tony",
       lastName: "Xin",
@@ -52,6 +56,7 @@ function CollegeDashboard() {
       major: "History"
     },
     {
+      uid: "aw33f9a34",
       imageUrl: "https://i.imgur.com/HkLY72h.jpg",
       firstName: "Brendan",
       lastName: "Wong",
@@ -62,7 +67,7 @@ function CollegeDashboard() {
   ]
 
   const clientItems = clientData.map((client) => 
-  <StudentBox imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.highschool} grade={client.grade} major={client.major}></StudentBox>
+  <StudentBox key={client.uid} imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.highschool} grade={client.grade} major={client.major}></StudentBox>
   )
 
   return (

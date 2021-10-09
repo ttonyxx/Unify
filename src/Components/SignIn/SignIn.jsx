@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { LoginFields } from "./LoginFields";
 import { AccountType } from "./AccountType";
 import { StudentFields } from "./StudentFields";
+import CollegeFields from "./CollegeFields";
 
 function SignIn() {
   // const [email, setEmail] = useState("");
@@ -29,6 +30,9 @@ function SignIn() {
   }
   else if (page == 2) {
     display = <StudentFields setPage={setPage}></StudentFields>
+  }
+  else if (page == 3) {
+    display = <CollegeFields setPage={setPage}></CollegeFields>
   }
 
   return (
