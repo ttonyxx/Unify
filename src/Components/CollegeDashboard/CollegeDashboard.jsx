@@ -17,6 +17,49 @@ function CollegeDashboard() {
     }
     if (!user) history.replace("/signin");
   }, [user, loading]);
+
+  let clientData = [
+    {
+      imageUrl: "https://i.imgur.com/HkLY72h.jpg",
+      firstName: "Tony",
+      lastName: "Xin",
+      highschool: "Mountain View High School",
+      grade: "Freshman"
+    },
+    {
+      imageUrl: "https://i.imgur.com/HkLY72h.jpg",
+      firstName: "Tony",
+      lastName: "Xin",
+      highschool: "Mountain View High School",
+      grade: "Freshman"
+    },
+    {
+      imageUrl: "https://i.imgur.com/HkLY72h.jpg",
+      firstName: "Tony",
+      lastName: "Xin",
+      highschool: "Mountain View High School",
+      grade: "Freshman"
+    },
+    {
+      imageUrl: "https://i.imgur.com/HkLY72h.jpg",
+      firstName: "Tony",
+      lastName: "Xin",
+      highschool: "Mountain View High School",
+      grade: "Freshman"
+    },
+    {
+      imageUrl: "https://i.imgur.com/HkLY72h.jpg",
+      firstName: "Tony",
+      lastName: "Xin",
+      highschool: "Mountain View High School",
+      grade: "Freshman"
+    },
+  ]
+
+  const clientItems = clientData.map((client) => 
+  <StudentBox imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.highschool} grade={client.grade}></StudentBox>
+  )
+
   return (
     <div className="dashboard">
         <Text fontSize="6xl">Welcome, Tony 👋</Text>
@@ -25,8 +68,7 @@ function CollegeDashboard() {
         <Box borderRadius="md" borderWidth="1px" p={4} mt="4">
             <Tag fontSize="3xl" colorScheme="gray" mb={2}>Clients</Tag>
             <HStack spacing="10px">
-                <StudentBox imageUrl="https://bit.ly/2Z4KKcF" firstName="Tony" lastName="Xin" highschool="Mountain View High School" grade="Freshman"></StudentBox>
-                <StudentBox imageUrl="https://bit.ly/2Z4KKcF" firstName="Tony" lastName="Xin" highschool="Mountain View High School" grade="Freshman"></StudentBox>
+                {clientItems}
             </HStack>
         </Box>
     </div>
