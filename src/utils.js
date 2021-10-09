@@ -78,13 +78,13 @@ export function filterName(name)
     }
 }
 
-export function getRecommended(collegeList, major)
+export function getRecommended(user)
 {
     const query = db
       .collection("users")
       .where('type', '==', 'college')
-      .where('major', '==', major)
-      .where('college', 'in', collegeList)
+      .where('major', '==', user.major)
+      .where('college', 'in', user.collegeList)
       .where()
       .get();
     if (query.empty) {

@@ -1,0 +1,30 @@
+/users/[uid]
+
+uid: 'Potato'
+firstName: 'Tony',
+lastName: 'Xin',
+type: 'college',
+mobile: '650-518-9339',
+email: 'tonyxin@berkeley.edu',
+year: 'Freshman',
+college: 'University of California, Berkeley',
+major: 'Electrical Engineering and Computer Science',
+imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
+rating: 4,
+reviewCount: 108,
+highSchool: '',
+collegeList: [],
+
+uid: 'Apple'
+firstName: 'Julian',
+lastName: 'Glass',
+type: 'high-school',
+mobile: '612-932-3438',
+email: 'julianglass@gmail.com',
+year: 'Sophmore',
+college: '',
+major: '',
+rating: 0,
+reviewCount: 0,
+highSchool: '',
+collegeList: ["UC Berkeley", "Harvard", "Stanford"]
