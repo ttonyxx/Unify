@@ -10,6 +10,44 @@ import {
     FormHelperText,
     Input
 } from "@chakra-ui/react"
+// theme.js
+// theme.js
+import { extendTheme } from "@chakra-ui/react"
+import { mode } from "@chakra-ui/theme-tools"
+
+// Version 1: Using objects
+const theme = extendTheme({
+  styles: {
+    global: {
+      // styles for the `body`
+      body: {
+        bg: "gray.400",
+        color: "white",
+      },
+      // styles for the `a`
+      a: {
+        color: "teal.500",
+        _hover: {
+          textDecoration: "underline",
+        },
+      },
+    },
+  },
+})
+
+// Version 2: Using functions
+const overrides = extendTheme({
+  styles: {
+    global: (props) => ({
+      body: {
+        fontFamily: "body",
+        color: mode("gray.800", "whiteAlpha.900")(props),
+        bg: mode("white", "gray.800")(props),
+        lineHeight: "base",
+      },
+    }),
+  },
+})
 
 const majors = [
     { value: "Architecture", label: "Architecture" },
@@ -65,18 +103,8 @@ export default function CollegeFields() {
 
     return (
         <div>
-            <CUIAutoComplete
-                label="Select your major(s)"
-                placeholder="Start typing"
-                onCreateItem={handleCreateItem}
-                items={pickerItems}
-                selectedItems={selectedItems}
-                onSelectedItemsChange={(changes) =>
-                    handleSelectedItemsChange(changes.selectedItems)
-                }
-            />
-
-            <FormControl id="school" isRequired>
+            <br />
+            <FormControl id="school" isRequired colorScheme="facebook">
                 <FormLabel>Search for your institution</FormLabel>
                 <Select placeholder="College/University">
                     <option>University of California Berkeley </option>
@@ -94,6 +122,18 @@ export default function CollegeFields() {
                     <option>Massachusetts Institute of Technology </option>
                 </Select>
             </FormControl>
+            <br />
+
+            <CUIAutoComplete
+                label="Select your major(s)"
+                placeholder="Start typing"
+                onCreateItem={handleCreateItem}
+                items={pickerItems}
+                selectedItems={selectedItems}
+                onSelectedItemsChange={(changes) =>
+                    handleSelectedItemsChange(changes.selectedItems)
+                }
+            />
 
             <FormControl as="fieldset" isRequired>
                 <FormLabel as="legend">Year in school</FormLabel>
@@ -106,10 +146,14 @@ export default function CollegeFields() {
                     </HStack>
                 </RadioGroup>
             </FormControl>
-            <FormControl id="first-name" isRequired>
-                <FormLabel>First name</FormLabel>
-                <Input placeholder="First name" />
+            <br />
+            <FormControl id="phone-number" isRequired>
+                <FormLabel>Phone Number</FormLabel>
+                <Input placeholder="(xxx) xxx - xxxx" />
             </FormControl>
+
+            <br />
+
         </div>
 
 

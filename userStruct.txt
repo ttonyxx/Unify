@@ -1,6 +1,5 @@
 /users/[uid]
 
-uid: 'Potato'
 firstName: 'Tony',
 lastName: 'Xin',
 type: 'college',
@@ -15,7 +14,6 @@ reviewCount: 108,
 highSchool: '',
 collegeList: [],
 
-uid: 'Apple'
 firstName: 'Julian',
 lastName: 'Glass',
 type: 'high-school',
