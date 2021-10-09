@@ -17,7 +17,7 @@ function StudentDashboard() {
   }, [user, loading]);
   return (
     <div className="dashboard">
-      <button onClick={logout}>Sign out</button>
+        <button onClick={logout}>Log out</button>
     </div>
   );
 }

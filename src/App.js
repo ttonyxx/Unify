@@ -4,6 +4,7 @@ import StudentDashboard from './Components/StudentDashboard/StudentDashboard'
 import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
 import { Route , Switch } from "react-router-dom";
+import React from "react"
 
 function App() {
   return (
