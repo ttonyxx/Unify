@@ -15,6 +15,7 @@ import { Logo } from './Logo';
 import StudentDashboard from './Components/StudentDashboard/StudentDashboard'
 import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
+import Profile from './Components/Profile/Profile'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/signin" component={SignIn}/>
         <Route path="/dashboard" component={StudentDashboard}/>
         <Route path="/college" component={CollegeDashboard}/>
+        <Route path="/profile" component={Profile}/>
       </Switch>
     </ChakraProvider>
   );
