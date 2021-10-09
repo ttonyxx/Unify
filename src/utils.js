@@ -5,10 +5,17 @@ const db = new Firestore({
     keyFilename: 'unify-328418-c8687e44be6e.json',
 });
 
+export default function addUser(uid, information)
+{
+  console.log("hi")
+  console.log(db.collection('users').doc(uid))
+  return db.collection('users').doc(uid).set(information);
+
+}
+
 export function filterMajor(major)
 {
-    const usersRef = db.collection('users');
-    const query = usersRef
+    const query = db
       .collection("users")
       .where('major', '==', major)
       .where('type', '==', 'college')
@@ -29,8 +36,7 @@ export function filterMajor(major)
 
 export function filterCollege(college)
 {
-    const usersRef = db.collection('users');
-    const query = usersRef
+    const query = db
       .collection("users")
       .where('college', '==', college)
       .where('type', '==', 'college')
@@ -51,8 +57,7 @@ export function filterCollege(college)
 
 export function filterName(name)
 {
-    const usersRef = db.collection('users');
-    const query = usersRef
+    const query = db
       .collection("users")
       .where('type', '==', 'college')
       .get();
@@ -75,8 +80,7 @@ export function filterName(name)
 
 export function getRecommended(collegeList, major)
 {
-  const usersRef = db.collection('users');
-    const query = usersRef
+    const query = db
       .collection("users")
       .where('type', '==', 'college')
       .where('major', '==', major)
@@ -111,3 +115,4 @@ export function shuffle(array) {
 
   return array;
 }
+

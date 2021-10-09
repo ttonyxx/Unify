@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Text, Box, Tag, Image, Flex, Stack, Badge, Button, HStack, Divider} from "@chakra-ui/react"
 import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
-import getUser from '../../utils';
+import addUser from '../../utils';
 import { UserRefreshClient } from "google-auth-library";
 
 function Profile() {
     let user = {
         firstName: 'Tony',
         lastName: 'Xin',
+        type: 'college',
         accountType: 'Undergraduate',
         mobile: '650-518-9339',
         email: 'tonyxin@berkeley.edu',
@@ -56,7 +57,9 @@ function Profile() {
                         <Button leftIcon={<EmailIcon />} colorScheme="teal" variant="solid">
                             Message
                         </Button>
-                        <Button rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
+                        <Button onClick={() => {
+                            addUser("potato", user)
+                        }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
                         </Button>
                     </HStack>
