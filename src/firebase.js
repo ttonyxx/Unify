@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider } from "firebase/auth";
-import Firestore from "@google-cloud/firestore";
 import { getAuth, signInWithPopup } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -10,21 +10,18 @@ import { getAuth, signInWithPopup } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB1WBVVJjWnEEPyxhfcNAFORAdphDmF6vg",
-  authDomain: "unify-ee0a5.firebaseapp.com",
-  projectId: "unify-ee0a5",
-  storageBucket: "unify-ee0a5.appspot.com",
-  messagingSenderId: "19184922246",
-  appId: "1:19184922246:web:bc18de38719fb6e2ed2b07",
-  measurementId: "G-DDRGQ9N3Y9"
+  apiKey: "AIzaSyBBgJHNS1S3WQ0YuWGWfT7P8VaECl1lhcs",
+  authDomain: "unify-328418.firebaseapp.com",
+  projectId: "unify-328418",
+  storageBucket: "unify-328418.appspot.com",
+  messagingSenderId: "422877082987",
+  appId: "1:422877082987:web:33105d2424e1a0dcc5c82e",
+  measurementId: "G-D5SCSCEZFB"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-const db = new Firestore({
-    projectId: 'unify-ee0a5',
-    keyFilename: 'unify-328418-c8687e44be6e.json',
-});
+const db = getFirestore();
 
 const googleProvider = new GoogleAuthProvider();
 

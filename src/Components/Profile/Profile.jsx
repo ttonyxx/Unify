@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Text, Box, Tag, Image, Flex, Stack, Badge, Button, HStack, Divider} from "@chakra-ui/react"
 import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
-import addUser from '../../utils';
+import {getUser, addUser, filterMajor, filterCollege, filterName, getRecommended} from '../../utils';
 import { UserRefreshClient } from "google-auth-library";
 
 function Profile() {
-    let user = {
+    const user = {
         firstName: 'Tony',
         lastName: 'Xin',
         type: 'college',
-        accountType: 'Undergraduate',
         mobile: '650-518-9339',
         email: 'tonyxin@berkeley.edu',
         year: 'Freshman',
@@ -17,7 +16,24 @@ function Profile() {
         major: 'Electrical Engineering and Computer Science',
         imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
         rating: 4,
-        reviewCount: 108
+        reviewCount: 108,
+        highSchool: '',
+        collegeList: [],
+    };
+
+    const highSchool = {
+        firstName: 'Julian',
+        lastName: 'Glass',
+        type: 'high-school',
+        mobile: '612-932-3438',
+        email: 'julianglass@gmail.com',
+        year: 'Sophmore',
+        college: '',
+        major: '',
+        rating: 0,
+        reviewCount: 0,
+        highSchool: '',
+        collegeList: ["University of California, Berkeley", "Harvard", "Stanford"]
     };
     useEffect(() => {
         //user = getUser()
@@ -58,7 +74,6 @@ function Profile() {
                             Message
                         </Button>
                         <Button onClick={() => {
-                            addUser("potato", user)
                         }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
                         </Button>
