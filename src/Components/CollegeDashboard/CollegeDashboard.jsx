@@ -3,7 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import { auth , logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { StudentBox } from "./StudentBox"
-import { Text, Badge } from "@chakra-ui/react"
+import { Text, Badge, Box, HStack, Tag } from "@chakra-ui/react"
+import './CollegeDashboard.css'
 
 function CollegeDashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -18,9 +19,16 @@ function CollegeDashboard() {
   }, [user, loading]);
   return (
     <div className="dashboard">
-        <Text m={5} fontSize="6xl">Welcome, Tony 👋</Text>
-        <Text m={5} fontSize="4xl">Your balance is <Badge mb={0.5} fontSize="0.8em">{ balance }</Badge></Text>
-        <StudentBox></StudentBox>
+        <Text fontSize="6xl">Welcome, Tony 👋</Text>
+        <Text mt={5} fontSize="4xl">Your balance is <Badge mb={0.5} fontSize="0.8em" colorScheme="green">{ balance }</Badge></Text>
+        
+        <Box borderRadius="md" borderWidth="1px" p={4} mt="4">
+            <Tag fontSize="3xl" colorScheme="gray" mb={2}>Clients</Tag>
+            <HStack spacing="10px">
+                <StudentBox imageUrl="https://bit.ly/2Z4KKcF" firstName="Tony" lastName="Xin" highschool="Mountain View High School" grade="Freshman"></StudentBox>
+                <StudentBox imageUrl="https://bit.ly/2Z4KKcF" firstName="Tony" lastName="Xin" highschool="Mountain View High School" grade="Freshman"></StudentBox>
+            </HStack>
+        </Box>
     </div>
   );
 }
