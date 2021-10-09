@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { StudentBox } from "./StudentBox"
 import { Text, Badge, Box, HStack, Tag } from "@chakra-ui/react"
 import './CollegeDashboard.css'
+//import ReactCSSTransitionGroup from 'react-transition-group';
 
 function CollegeDashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -72,6 +73,7 @@ function CollegeDashboard() {
 
   return (
     <div className="dashboard">
+      
         <Text fontSize="6xl">Welcome, {user ? user.displayName.split(" ")[0] : ""} 👋</Text>
         <Text mt={5} fontSize="4xl">Your balance is <Badge mb={0.5} fontSize="0.8em" colorScheme="green">{ balance }</Badge></Text>
         

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image } from "@chakra-ui/image";
 import { Box, Flex, Spacer } from "@chakra-ui/layout";
 import Logo from '../../assets/hhl.svg'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { GetAuthInfo } from '../Hooks/getData';
 import { logout } from "../../firebase";
 import { Button, Avatar } from '@chakra-ui/react';
@@ -11,8 +11,8 @@ import { useLocation } from 'react-router-dom'
 const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
   const [location] = useState(useLocation());
+  
 
-  console.log(location.pathname)
   useEffect(() => {
     
   }, [user, loading]);
@@ -35,12 +35,12 @@ const Navbar = () => {
         margin="1rem 0.5rem 1rem 0rem"
       />
       <Spacer />
-      {user ?
+      {user && location.pathname != '/signin' ?
         (<Link to='/dashboard'>
           Dashboard
         </Link>) : (<></>)
       }
-      {user ? 
+      {user && location.pathname != '/signin' ? 
         (<Button 
           onClick={logout}
           color='black'
@@ -51,11 +51,14 @@ const Navbar = () => {
             ml={1}
             src={user.photoURL}
           />{" "}
-        </Button>) : 
+        </Button>) : (<></>)
+      }
+      {
+        !user && location.pathname != '/signin' ?
         (<Link to='/signin'>
           Sign In
-        </Link>
-      )}
+        </Link>)
+       : (<></>)}
     </Flex>
   )
 };

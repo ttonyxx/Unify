@@ -74,7 +74,7 @@ export async function getRecommended(user)
   let temp;
   var array = [];
 
-  let q = query(collection(db, "users"), where("major", "==", user.major), where("type", "==", "college"));
+  let q = query(collection(db, "users"), where("major", "in", user.majorInterest), where("type", "==", "college"));
   let querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     temp = doc.data();

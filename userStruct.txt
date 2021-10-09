@@ -20,7 +20,10 @@ type: 'high-school',
 mobile: '612-932-3438',
 email: 'julianglass@gmail.com',
 year: 'Sophmore',
-state: 'California',
-highSchool: '',
+college: '',
+majorInterests: [],
+rating: 0,
+reviewCount: 0,
+highSchool: 'Sunnyside High school',
 collegeList: ["UC Berkeley", "Harvard", "Stanford"]
-majorList: ["Computer Science"]
+imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
