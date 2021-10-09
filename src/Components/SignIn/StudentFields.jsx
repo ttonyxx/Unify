@@ -21,43 +21,53 @@ import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
 import { addUser } from "../../utils"
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from '../../firebase'
 
 export const StudentFields = (props) => {
+    const [user, loading, error] = useAuthState(auth)
+    const email = user.email;
+    const photoUrl = user.photoURL;
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [state, setState] = useState('');
+    const [highSchool, setHighSchool] = useState('');
+    const [grade, setGrade] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const history = useHistory();
-    const handleSubmit = (event) => {
-        let user = {
+    const handleSubmit = () => {
+        console.log("Got here")
+        let student = {
             firstName: firstName,
             lastName: lastName,
             type: 'high-school',
-            mobile: '612-932-3438',
-            email: 'julianglass@gmail.com',
-            year: 'Sophmore',
-            state: 'California',
-            highSchool: '',
+            mobile: phoneNumber,
+            email: email,
+            year: grade,
+            state: state,
+            majorInterests: [],
+            highSchool: highSchool,
             collegeList: [],
-            majorList: [],
-            imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
-        }
+            imageUrl: photoUrl,
+            };
+        console.log(student)
         addUser(user)
         
-        history.replace("/dashboard")
+        history.replace("/dashboard");
     };
     return(
-    <FormControl onSubmit={handleSubmit}>
-        <FormControl id="first-name" isRequired
-        onChange={event => setFirstName(event.currentTarget.value)}>
+    <FormControl>
+        <FormControl id="first-name" isRequired>
             <FormLabel>First name</FormLabel>
-            <Input placeholder="First name" />
+            <Input placeholder="First name" onChange={event => setFirstName(event.currentTarget.value)}/>
         </FormControl>
         <FormControl id="last-name" isRequired>
             <FormLabel>Last name</FormLabel>
-            <Input placeholder="Last name" />
+            <Input placeholder="Last name" onChange={event => setLastName(event.currentTarget.value)}/>
         </FormControl>
         <FormControl id="state" isRequired>
             <FormLabel>State</FormLabel>
-            <Select placeholder="Select state">
+            <Select placeholder="Select state" onChange={event => setState(event.currentTarget.getAttribute)}> 
                 <option>Alabama</option>
                 <option>Alaska</option>
                 <option>Arizona</option>
@@ -112,20 +122,21 @@ export const StudentFields = (props) => {
         </FormControl>
         <FormControl id="high school" isRequired>
             <FormLabel>High School</FormLabel>
-            <Input placeholder="Mountain View High School" />
+            <Input placeholder="Mountain View High School" onChange={event => setHighSchool(event.currentTarget.value)}/>
         </FormControl>
         <FormControl id="grade" isRequired>
             <FormLabel>Grade</FormLabel>
-            <Input placeholder="Senior" />
+            <Input placeholder="Senior" onChange={event => setGrade(event.currentTarget.value)}/>
         </FormControl>
-        <FormControl id="movile" isRequired>
+        <FormControl id="mobile" isRequired>
             <FormLabel>Phone Number</FormLabel>
-            <Input placeholder="123-456-7890" />
+            <Input placeholder="123-456-7890" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
         </FormControl>
         <Flex
             justifyContent = "center">
             <Button 
                 mt={4}
+                onClick={handleSubmit}
                 colorScheme="teal"
                 isLoading={props.isSubmitting}
                 type="submit">
