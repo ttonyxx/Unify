@@ -4,7 +4,7 @@ import Logo from '../../assets/hhl.svg'
 import { Link } from 'react-router-dom';
 import { GetAuthInfo } from '../Hooks/getData';
 import { logout } from "../../firebase";
-import { Button } from '@chakra-ui/react';
+import { Button, Avatar } from '@chakra-ui/react';
 
 const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
@@ -38,6 +38,11 @@ const Navbar = () => {
           color='black'
         >
           Logout
+          <Avatar
+            size="xs"
+            name="Kola Tioluwani"
+            src="https://bit.ly/tioluwani-kolawole"
+          />{" "}
         </Button>) : 
         (<Link to='/signin'>
           Sign In

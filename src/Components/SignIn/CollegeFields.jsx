@@ -10,10 +10,6 @@ import {
     FormHelperText,
     Input
 } from "@chakra-ui/react"
-import { MultiSelect } from "react-multi-select-component";
-import ReactDOM from "react-dom";
-import { ThemeProvider, CSSReset, Box, Stack, Heading } from "@chakra-ui/core";
-
 
 const majors = [
     { value: "Architecture", label: "Architecture" },
