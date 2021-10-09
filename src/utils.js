@@ -1,11 +1,11 @@
 import Firestore from "@google-cloud/firestore";
 
 const db = new Firestore({
-        projectId: 'unify-ee0a5',
-        keyFilename: 'unify-328418-c8687e44be6e.json',
-    });
+    projectId: 'unify-ee0a5',
+    keyFilename: 'unify-328418-c8687e44be6e.json',
+});
 
-function filterMajor(major)
+export function filterMajor(major)
 {
     const usersRef = db.collection('users');
     const query = await usersRef
@@ -27,7 +27,7 @@ function filterMajor(major)
     }
 }
 
-function filterCollege(college)
+export function filterCollege(college)
 {
     const usersRef = db.collection('users');
     const query = await usersRef
@@ -49,7 +49,7 @@ function filterCollege(college)
     }
 }
 
-function filterName(name)
+export function filterName(name)
 {
     const usersRef = db.collection('users');
     const query = await usersRef
