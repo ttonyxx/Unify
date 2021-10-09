@@ -1,0 +1,12 @@
+.dashboard {
+    padding: 30px;
+}
+
+.studentBox {
+    transition: all 0.3s;
+}
+
+.studentBox:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+}
