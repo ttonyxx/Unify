@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route , Switch } from "react-router-dom";
 import {
   ChakraProvider,
   Box,
@@ -11,30 +12,21 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+import StudentDashboard from './Components/StudentDashboard/StudentDashboard'
+import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
+import SignIn from './Components/SignIn/SignIn'
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+      <header className="App-header">
+        Unify
+      </header>
+      <Switch>
+        <Route path="/signin" component={SignIn}/>
+        <Route path="/dashboard" component={StudentDashboard}/>
+        <Route path="/college" component={CollegeDashboard}/>
+      </Switch>
     </ChakraProvider>
   );
 }
