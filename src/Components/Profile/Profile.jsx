@@ -17,8 +17,6 @@ function Profile() {
         imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
         rating: 4,
         reviewCount: 108,
-        highSchool: '',
-        collegeList: [],
     };
 
     const highSchool = {
@@ -76,6 +74,7 @@ function Profile() {
                             //let array = ["Computer Science", "Economics"];
                             //setMajors("julianglass@gmail.com", array)
                             //getUser('tonyxin@berkeley.edu').then((value) => console.log(value))
+                            addUser(user);
                         }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
                         </Button>

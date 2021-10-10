@@ -35,7 +35,7 @@ export const StudentFields = (props) => {
     const lastName = user.displayName.split(" ")[1];
     const [state, setState] = useState('');
     const [highSchool, setHighSchool] = useState('');
-    const [grade, setGrade] = useState('');
+    const [grade, setGrade] = useState('Senior');
     const [phoneNumber, setPhoneNumber] = useState('');
     const history = useHistory();
     const handleSubmit = () => {

@@ -120,7 +120,7 @@ export default function CollegeFields() {
 
     const [college, setCollege] = useState('');
 
-    const [grade, setGrade] = useState('');
+    const [grade, setGrade] = useState('Senior');
     const [phoneNumber, setPhoneNumber] = useState('');
     const history = useHistory();
 
