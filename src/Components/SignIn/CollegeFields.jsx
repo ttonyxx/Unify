@@ -10,7 +10,10 @@ import {
     FormHelperText,
     Input,
     Flex,
-    Button
+    Button,
+    Box,
+    useColorModeValue,
+    Text
 } from "@chakra-ui/react"
 // theme.js
 // theme.js
@@ -112,8 +115,9 @@ export default function CollegeFields() {
     const email = user.email;
     const photoUrl = user.photoURL;
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const firstName = user.displayName.split(" ")[0];
+    const lastName = user.displayName.split(" ")[1];
+
     const [college, setCollege] = useState('');
 
     const [grade, setGrade] = useState('');
@@ -153,17 +157,17 @@ export default function CollegeFields() {
     return (
         <div>
             <br />
-
-            <FormControl id="first-name" isRequired>
-              <FormLabel>First name</FormLabel>
-              <Input placeholder="First name" onChange={event => setFirstName(event.currentTarget.value)}/>
-            </FormControl>
-            <FormControl id="last-name" isRequired>
-                <FormLabel>Last name</FormLabel>
-                <Input placeholder="Last name" onChange={event => setLastName(event.currentTarget.value)}/>
-            </FormControl>
-
-            <FormControl id="school" isRequired colorScheme="facebook">
+            <Box
+              alignContent = "top"
+              borderColor = 'blackAlpha.50'
+              borderWidth = '5px'
+              bg={useColorModeValue('gray.50', 'inherit')}
+              minH="100vh"
+              py="12"
+              px={{ base: '4', lg: '8' }}
+              margin = '-0.5rem 1rem 6rem 1rem'>
+            <Text fontSize = "4xl">Welcome {firstName} {lastName}!</Text>
+            <FormControl id="school" isRequired colorScheme="facebook" margin = "1rem 0rem 0rem 0rem">
                 <FormLabel>Search for your institution</FormLabel>
                 <Select placeholder="College/University" onChange={event => setCollege(event.currentTarget.value)}>
                     <option>University of California Berkeley </option>
@@ -184,6 +188,7 @@ export default function CollegeFields() {
             <br />
 
             <CUIAutoComplete
+                margin = "1rem 0rem 1rem 0rem"
                 label="Select your major"
                 placeholder="Start typing"
                 onCreateItem={handleCreateItem}
@@ -194,7 +199,7 @@ export default function CollegeFields() {
                 }
             />
 
-            <FormControl as="fieldset" isRequired>
+            <FormControl as="fieldset" isRequired margin = "0rem 0rem 0rem 0rem">
                 <FormLabel as="legend">Year in school</FormLabel>
                 <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
                     <HStack spacing="50px">
@@ -206,7 +211,7 @@ export default function CollegeFields() {
                 </RadioGroup>
             </FormControl>
             <br />
-            <FormControl id="phone-number" isRequired>
+            <FormControl id="phone-number" isRequired margin = "0rem 0rem 1rem 0rem">
                 <FormLabel>Phone Number</FormLabel>
                 <Input placeholder="(xxx) xxx - xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
             </FormControl>
@@ -221,7 +226,7 @@ export default function CollegeFields() {
                   Signup
               </Button>
             </Flex>
-
+            </Box>
             <br />
 
         </div>
