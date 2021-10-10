@@ -305,15 +305,15 @@ const FinancesModal = ({college}) => {
             <Text fontSize="3xl" padding='1.5rem 0 1rem 0'>Loan Calculator</Text>
             <FormControl>
               <FormLabel>Loan Amount</FormLabel>
-              <Input type="collegeName" onChange={(event)=>setLoanAmount(parseInt(event.target.value))}/>
+              <Input defaultValue={loanAmount} type="collegeName" onChange={(event)=>setLoanAmount(parseInt(event.target.value))}/>
               <FormHelperText>In dollars ($)</FormHelperText>
               <Box height='1rem' />
               <FormLabel>Interest Rate</FormLabel>
-              <Input type="collegeName" onChange={(event)=>setInterestRate(parseInt(event.target.value))}/>
+              <Input defaultValue={interestRate} type="collegeName" onChange={(event)=>setInterestRate(parseInt(event.target.value))}/>
               <FormHelperText>In percentage (%)</FormHelperText>
               <Box height='1rem' />
               <FormLabel>Loan Terms</FormLabel>
-              <Input type="collegeName" onChange={(event)=>setLoanTerms(parseInt(event.target.value))}/>
+              <Input defaultValue={loanTerms} type="collegeName" onChange={(event)=>setLoanTerms(parseInt(event.target.value))}/>
               <FormHelperText>In years</FormHelperText>
               <Box height='1rem' />
             </FormControl>
