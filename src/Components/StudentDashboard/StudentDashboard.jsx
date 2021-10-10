@@ -50,19 +50,19 @@ const mockStudentData = [
     'status': 'Drafted'
   },
   {
-    'name': 'Tsinghua',
+    'name': 'Williams',
     'date': '1635033600',
     'chance': 'Target',
     'status': 'Not Started'
   },
   {
-    'name': 'DeVry',
+    'name': 'EveRy',
     'date': '1635633600',
     'chance': 'Target',
     'status': 'Done'
   },
   {
-    'name': 'KAIST',
+    'name': 'Berklee',
     'date': '1638533600',
     'chance': 'Reach',
     'status': 'Started'
