@@ -69,6 +69,7 @@ function Search() {
                 updateStudentItems()
             })
         } else {
+            console.log(userData)
             getMajorRecommended(userData).then((val) => {
                 users = val
                 updateStudentItems()

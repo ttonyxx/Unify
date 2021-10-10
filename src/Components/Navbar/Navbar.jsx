@@ -5,7 +5,7 @@ import Logo from '../../assets/hhl.svg'
 import { Link, useHistory } from 'react-router-dom';
 import { GetAuthInfo } from '../Hooks/getData';
 import { logout } from "../../firebase";
-import { Button, Avatar } from '@chakra-ui/react';
+import { Button, Avatar, Text } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom'
 import { getUser } from '../../utils'
 
@@ -38,10 +38,12 @@ const Navbar = () => {
     >
       <Image 
         src={Logo} 
+        ml={4}
+        mt={2}
+        mb={2}
         alt="Unify Logo"
         height='3rem'
-        margin="1rem 0.5rem 1rem 0rem"
-      />
+      /><Text ml={-4} fontSize="2xl" color="gray.500">nify</Text>
       <Spacer />
       {user && location.pathname != '/signin' ?
         (<Link to='/dashboard'>
