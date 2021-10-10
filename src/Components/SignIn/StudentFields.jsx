@@ -15,7 +15,10 @@ import {
     NumberDecrementStepper,
     Button,
     Flex,
-    Form
+    Form,
+    Box,
+    useColorModeValue,
+    Text
 } from "@chakra-ui/react"
 import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
 import { addUser } from "../../utils"
@@ -28,11 +31,11 @@ export const StudentFields = (props) => {
     const [user, loading, error] = useAuthState(auth)
     const email = user.email;
     const photoUrl = user.photoURL;
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const firstName = user.displayName.split(" ")[0];
+    const lastName = user.displayName.split(" ")[1];
     const [state, setState] = useState('');
     const [highSchool, setHighSchool] = useState('');
-    const [grade, setGrade] = useState('');
+    const [grade, setGrade] = useState('Senior');
     const [phoneNumber, setPhoneNumber] = useState('');
     const history = useHistory();
     const handleSubmit = () => {
@@ -51,23 +54,24 @@ export const StudentFields = (props) => {
             imageUrl: photoUrl,
             };
         console.log(student)
-        addUser(user)
+        addUser(student)
         
         history.replace("/dashboard");
     };
     return(
+    <Box
+    borderColor = 'blackAlpha.50'
+    borderWidth = '5px'
+    bg={useColorModeValue('gray.50', 'inherit')}
+    minH="100vh"
+    py="12"
+    px={{ base: '4', lg: '8' }}
+    margin = '1rem 1rem 6rem 1rem'>
     <FormControl>
-        <FormControl id="first-name" isRequired>
-            <FormLabel>First name</FormLabel>
-            <Input placeholder="First name" onChange={event => setFirstName(event.currentTarget.value)}/>
-        </FormControl>
-        <FormControl id="last-name" isRequired>
-            <FormLabel>Last name</FormLabel>
-            <Input placeholder="Last name" onChange={event => setLastName(event.currentTarget.value)}/>
-        </FormControl>
-        <FormControl id="state" isRequired>
+        <Text fontSize = "4xl">Welcome {firstName} {lastName}!</Text>
+        <FormControl id="state" isRequired margin = "1rem 0rem 1rem 0rem">
             <FormLabel>State</FormLabel>
-            <Select placeholder="Select state" onChange={event => setState(event.currentTarget.getAttribute)}> 
+            <Select placeholder="Select state" onChange={event => setState(event.currentTarget.value)}> 
                 <option>Alabama</option>
                 <option>Alaska</option>
                 <option>Arizona</option>
@@ -120,17 +124,24 @@ export const StudentFields = (props) => {
                 <option>Wyoming</option>
             </Select>
         </FormControl>
-        <FormControl id="high school" isRequired>
+        <FormControl id="high school" isRequired margin = "1rem 0rem 1rem 0rem">
             <FormLabel>High School</FormLabel>
             <Input placeholder="Mountain View High School" onChange={event => setHighSchool(event.currentTarget.value)}/>
         </FormControl>
-        <FormControl id="grade" isRequired>
-            <FormLabel>Grade</FormLabel>
-            <Input placeholder="Senior" onChange={event => setGrade(event.currentTarget.value)}/>
+        <FormControl as="fieldset" isRequired>
+            <FormLabel as="legend">Year in school</FormLabel>
+            <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
+                <HStack spacing="50px">
+                    <Radio value="Freshman">Freshman</Radio>
+                    <Radio value="Sophomore">Sophomore</Radio>
+                    <Radio value="Junior">Junior</Radio>
+                    <Radio value="Senior">Senior</Radio>
+                </HStack>
+            </RadioGroup>
         </FormControl>
-        <FormControl id="mobile" isRequired>
+        <FormControl id="mobile" isRequired margin = "1rem 0rem 1rem 0rem">
             <FormLabel>Phone Number</FormLabel>
-            <Input placeholder="123-456-7890" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
+            <Input placeholder="(xxx) xxx- xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
         </FormControl>
         <Flex
             justifyContent = "center">
@@ -144,4 +155,5 @@ export const StudentFields = (props) => {
             </Button>
         </Flex>
     </FormControl>
+    </Box>
     )}

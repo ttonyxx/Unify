@@ -1,10 +1,10 @@
 import { db } from './firebase'
-import {collection, addDoc, query, where, getDocs } from "firebase/firestore"; 
+import {collection, addDoc, query, where, getDocs, doc, setDoc } from "firebase/firestore"; 
 
 export async function addUser(information)
 {
   try {
-    const docRef = await addDoc(collection(db, "users"), information);
+    const docRef = await setDoc(doc(db, "users", information.email), information);
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -123,12 +123,23 @@ export async function getMajorRecommended(user) {
 
   shuffle(array)
   return array;
+
+  export async function setMajors(email, array)
+{
+  const ref = doc(db, 'users', email);
+  setDoc(ref, { majorInterests: array }, { merge: true });
+}
+
+export async function setColleges(email, array)
+{
+  const ref = doc(db, 'users', email);
+  setDoc(ref, { collegeList: array }, { merge: true });
 }
 
 export function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
-  while (currentIndex != 0) {
+  while (currentIndex !== 0) {
 
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
