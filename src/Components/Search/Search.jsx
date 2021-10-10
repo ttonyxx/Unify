@@ -70,7 +70,6 @@ function Search() {
             })
         } else {
             getMajorRecommended(userData).then((val) => {
-                console.log("Whatsup")
                 users = val
                 updateStudentItems()
             })
