@@ -10,11 +10,10 @@ import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
-  const [location] = useState(useLocation());
+  const [location, setLocation] = useState(useLocation());
   
 
   useEffect(() => {
-    
   }, [user, loading]);
 
   return (
@@ -38,6 +37,11 @@ const Navbar = () => {
       {user && location.pathname != '/signin' ?
         (<Link to='/dashboard'>
           Dashboard
+        </Link>) : (<></>)
+      }
+      {user && location.pathname != '/signin' ?
+        (<Link to='/search'>
+          Explore
         </Link>) : (<></>)
       }
       {user && location.pathname != '/signin' ? 

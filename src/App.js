@@ -9,6 +9,7 @@ import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
 import Profile from './Components/Profile/Profile'
 import Navbar from './Components/Navbar/Navbar';
+import Search from './Components/Search/Search';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import { getUser } from "./utils"
@@ -47,6 +48,7 @@ function App() {
         }
         <Route path="/college" component={CollegeDashboard}/>
         <Route path="/profile" component={Profile}/>
+        <Route path="/search" component={Search}/>
       </Switch>
     </ChakraProvider>
   );

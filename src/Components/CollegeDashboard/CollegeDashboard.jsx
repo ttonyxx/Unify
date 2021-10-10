@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth, logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { StudentBox } from "./StudentBox"
+import { StudentBox } from "../StudentBox"
 import { Text, Badge, Box, HStack, Tag, IconButton, VStack } from "@chakra-ui/react"
 import { Stack, useToast } from '@chakra-ui/react'
 import { ArrowRightIcon } from "@chakra-ui/icons"
@@ -26,6 +26,7 @@ import {
 
 function CollegeDashboard({ sendMessage }) {
   const [user, loading, error] = useAuthState(auth);
+  const [message, setMessage] = useState('');
   const [balance, setBalance] = useState('$125.35');
   const [messages, setMessages] = useState('7 messages')
   const [chatName, setChatName] = useState('')
@@ -57,7 +58,7 @@ function CollegeDashboard({ sendMessage }) {
     }
     else{
       console.log(value)
-      this.getElementById("message-box").reset();
+      setMessage(value)
     }
     }
 
@@ -158,7 +159,7 @@ function CollegeDashboard({ sendMessage }) {
               <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue">When do you want to meet?</Badge></Text>
               <Text fontSize="xl" mb={1}><Badge fontSize="0.7em">Does 11am tomorrow work?</Badge></Text>
               <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue">Yeah! See you then!</Badge></Text>
-              <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue"></Badge></Text>
+              <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue">{message}</Badge></Text>
             </DrawerBody>
 
             <DrawerFooter>
