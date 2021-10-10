@@ -26,8 +26,62 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '../../firebase'
+import { CUIAutoComplete } from 'chakra-ui-autocomplete'
+
+const majors = [
+    { value: "Architecture", label: "Architecture" },
+    { value: "Anthropology", label: "Anthropology" },
+    { value: "Biology", label: "Biology" },
+    { value: "Biomedical Engineering", label: "Biomedical Engineering" },
+    { value: "Business Administration", label: "Business Administration" },
+    { value: "Chemistry", label: "Chemistry" },
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Dance", label: "Dance" },
+    { value: "Dentistry", label: "Dentistry" },
+    { value: "Economics", label: "Economics" },
+    { value: "Education", label: "Education" },
+    { value: "English", label: "English" },
+    { value: "Finance", label: "Finance" },
+    { value: "French", label: "French" },
+    { value: "Geography", label: "Geography" },
+    { value: "History", label: "History" },
+    { value: "International Studies", label: "International Studies" },
+    { value: "Journalism", label: "Journalism" },
+    { value: "Korean", label: "Korean" },
+    { value: "Law", label: "Law" },
+    { value: "Management", label: "Management" },
+    { value: "Neuroscience", label: "Neuroscience" },
+    { value: "Optometry", label: "Optometry" },
+    { value: "Psychology", label: "Psychology" },
+    { value: "Public Health", label: "Public Health" },
+    { value: "Sociology", label: "Sociology" },
+    { value: "Spanish", label: "Spanish" },
+    { value: "Statistics", label: "Statistics" },
+    { value: "Teaching", label: "Teaching" },
+    { value: "Web Design", label: "Web Design" },
+    { value: "Zoology", label: "Zoology" },
+    { value: "Undecided", label: "Undecided" }
+];
+
 
 export const StudentFields = (props) => {
+
+    const [pickerItems, setPickerItems] = React.useState(majors);
+    const [selectedItems, setSelectedItems] = React.useState([]);
+    const [selected, setSelected] = React.useState([]);
+
+    const handleCreateItem = (item) => {
+        setPickerItems((curr) => [...curr, item]);
+        setSelectedItems((curr) => [...curr, item]);
+    };
+
+    const handleSelectedItemsChange = (selectedItems) => {
+        if (selectedItems) {
+            setSelectedItems(selectedItems);
+        }
+    };
+
+
     const [user, loading, error] = useAuthState(auth)
     const email = user.email;
     const photoUrl = user.photoURL;
@@ -39,6 +93,11 @@ export const StudentFields = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const history = useHistory();
     const handleSubmit = () => {
+        let majors = [];
+        for(var i = 0; i < selectedItems.length; i++)
+        {
+          majors.push(selectedItems[i].value);
+        }
         console.log("Got here")
         let student = {
             firstName: firstName,
@@ -48,7 +107,7 @@ export const StudentFields = (props) => {
             email: email,
             year: grade,
             state: state,
-            majorInterests: [],
+            majorInterests: majors,
             highSchool: highSchool,
             collegeList: [],
             imageUrl: photoUrl,
@@ -128,7 +187,7 @@ export const StudentFields = (props) => {
             <FormLabel>High School</FormLabel>
             <Input placeholder="Mountain View High School" onChange={event => setHighSchool(event.currentTarget.value)}/>
         </FormControl>
-        <FormControl as="fieldset" isRequired>
+        <FormControl as="fieldset" isRequired margin = "1rem 0rem 1rem 0rem">
             <FormLabel as="legend">Year in school</FormLabel>
             <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
                 <HStack spacing="50px">
@@ -139,6 +198,17 @@ export const StudentFields = (props) => {
                 </HStack>
             </RadioGroup>
         </FormControl>
+        <CUIAutoComplete
+                margin = "1rem 0rem 1rem 0rem"
+                label="Select your major"
+                placeholder="Start typing"
+                onCreateItem={handleCreateItem}
+                items={pickerItems}
+                selectedItems={selectedItems}
+                onSelectedItemsChange={(changes) =>
+                    handleSelectedItemsChange(changes.selectedItems)
+                }
+            />
         <FormControl id="mobile" isRequired margin = "1rem 0rem 1rem 0rem">
             <FormLabel>Phone Number</FormLabel>
             <Input placeholder="(xxx) xxx- xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
