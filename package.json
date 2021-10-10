@@ -8,6 +8,8 @@
     "@chakra-ui/react": "^1.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
+    "@fullcalendar/daygrid": "^5.9.0",
+    "@fullcalendar/react": "^5.9.0",
     "@google-cloud/firestore": "^4.15.1",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
