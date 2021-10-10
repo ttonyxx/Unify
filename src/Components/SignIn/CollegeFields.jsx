@@ -8,56 +8,8 @@ import {
     HStack,
     RadioGroup,
     FormHelperText,
-    Input,
-    Flex,
-    Button,
-    Box,
-    useColorModeValue,
-    Text
+    Input
 } from "@chakra-ui/react"
-// theme.js
-// theme.js
-import { extendTheme } from "@chakra-ui/react"
-import { mode } from "@chakra-ui/theme-tools"
-import { addUser } from "../../utils"
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from '../../firebase'
-
-// Version 1: Using objects
-const theme = extendTheme({
-  styles: {
-    global: {
-      // styles for the `body`
-      body: {
-        bg: "gray.400",
-        color: "white",
-      },
-      // styles for the `a`
-      a: {
-        color: "teal.500",
-        _hover: {
-          textDecoration: "underline",
-        },
-      },
-    },
-  },
-})
-
-// Version 2: Using functions
-const overrides = extendTheme({
-  styles: {
-    global: (props) => ({
-      body: {
-        fontFamily: "body",
-        color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("white", "gray.800")(props),
-        lineHeight: "base",
-      },
-    }),
-  },
-})
 
 const majors = [
     { value: "Architecture", label: "Architecture" },
@@ -111,65 +63,12 @@ export default function CollegeFields() {
         }
     };
 
-    const [user, loading, error] = useAuthState(auth)
-    const email = user.email;
-    const photoUrl = user.photoURL;
-
-    const firstName = user.displayName.split(" ")[0];
-    const lastName = user.displayName.split(" ")[1];
-
-    const [college, setCollege] = useState('');
-
-    const [grade, setGrade] = useState('Senior');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const history = useHistory();
-
-    const handleSubmit = () => {
-        console.log("Got here")
-        let major = "";
-        for(var i = 0; i < selectedItems.length; i++)
-        {
-          if(i > 0)
-          {
-            major += ", "
-          }
-          major += selectedItems[i].value
-        }
-        let mentor = {
-            firstName: firstName,
-            lastName: lastName,
-            type: 'college',
-            mobile: phoneNumber,
-            email: email,
-            year: grade,
-            college: college,
-            major: major,
-            imageUrl: photoUrl,
-            rating: 0,
-            reviewCount: 0,
-            };
-        console.log(mentor)
-        addUser(mentor)
-        
-        history.replace("/dashboard");
-      };
-
     return (
         <div>
             <br />
-            <Box
-              alignContent = "top"
-              borderColor = 'blackAlpha.50'
-              borderWidth = '5px'
-              bg={useColorModeValue('gray.50', 'inherit')}
-              minH="100vh"
-              py="12"
-              px={{ base: '4', lg: '8' }}
-              margin = '-0.5rem 1rem 6rem 1rem'>
-            <Text fontSize = "4xl">Welcome {firstName} {lastName}!</Text>
-            <FormControl id="school" isRequired colorScheme="facebook" margin = "1rem 0rem 0rem 0rem">
+            <FormControl id="school" isRequired colorScheme="facebook">
                 <FormLabel>Search for your institution</FormLabel>
-                <Select placeholder="College/University" onChange={event => setCollege(event.currentTarget.value)}>
+                <Select placeholder="College/University">
                     <option>University of California Berkeley </option>
                     <option>University of California Santa Cruz </option>
                     <option>University of California Riverside </option>
@@ -188,8 +87,7 @@ export default function CollegeFields() {
             <br />
 
             <CUIAutoComplete
-                margin = "1rem 0rem 1rem 0rem"
-                label="Select your major"
+                label="Select your major(s)"
                 placeholder="Start typing"
                 onCreateItem={handleCreateItem}
                 items={pickerItems}
@@ -199,9 +97,9 @@ export default function CollegeFields() {
                 }
             />
 
-            <FormControl as="fieldset" isRequired margin = "0rem 0rem 0rem 0rem">
+            <FormControl as="fieldset" isRequired>
                 <FormLabel as="legend">Year in school</FormLabel>
-                <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
+                <RadioGroup defaultValue="Itachi">
                     <HStack spacing="50px">
                         <Radio value="Freshman">Freshman</Radio>
                         <Radio value="Sophomore">Sophomore</Radio>
@@ -211,22 +109,11 @@ export default function CollegeFields() {
                 </RadioGroup>
             </FormControl>
             <br />
-            <FormControl id="phone-number" isRequired margin = "0rem 0rem 1rem 0rem">
+            <FormControl id="phone-number" isRequired>
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="(xxx) xxx - xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
+                <Input placeholder="(xxx) xxx - xxxx" />
             </FormControl>
 
-            <Flex
-              justifyContent = "center">
-              <Button 
-                  mt={4}
-                  onClick={handleSubmit}
-                  colorScheme="teal"
-                  type="submit">
-                  Signup
-              </Button>
-            </Flex>
-            </Box>
             <br />
 
         </div>
