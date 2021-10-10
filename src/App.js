@@ -1,30 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { Route , Switch } from "react-router-dom";
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
   theme,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
 import StudentDashboard from './Components/StudentDashboard/StudentDashboard'
 import CollegeDashboard from './Components/CollegeDashboard/CollegeDashboard'
 import SignIn from './Components/SignIn/SignIn'
 import Profile from './Components/Profile/Profile'
 import Navbar from './Components/Navbar/Navbar';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
+import { getUser } from "./utils"
+import { useHistory } from 'react-router-dom';
 
 function App() {
+
+  const [user, loading, error] = useAuthState(auth);
+  const [loaded, setLoaded] = useState(false)
+  const [type, setType] = useState('');
+  const history = useHistory();
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (!user) history.replace("/signin");
+    else {
+      getUser(user.email).then((value) => {
+        if (value) {
+          setType(value.type);
+          setLoaded(true)
+        }
+      })
+    }
+  }, [user, loading]);
+
   return (
     <ChakraProvider theme={theme}>
       <Navbar />
       <Switch>
         <Route path="/signin" component={SignIn}/>
-        <Route path="/dashboard" component={StudentDashboard}/>
+        { loaded ?
+          (<Route path="/dashboard" component={type == 'high-school' ? StudentDashboard : CollegeDashboard}/>) :
+          (<></>)
+        }
         <Route path="/college" component={CollegeDashboard}/>
         <Route path="/profile" component={Profile}/>
       </Switch>

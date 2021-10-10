@@ -1,104 +1,97 @@
-import Firestore from "@google-cloud/firestore";
+import { db } from './firebase'
+import {collection, addDoc, query, where, getDocs } from "firebase/firestore"; 
 
-const db = new Firestore({
-    projectId: 'unify-ee0a5',
-    keyFilename: 'unify-328418-c8687e44be6e.json',
-});
-
-export default function addUser(uid, information)
+export async function addUser(information)
 {
-  console.log("hi")
-  console.log(db.collection('users').doc(uid))
-  return db.collection('users').doc(uid).set(information);
-
+  try {
+    const docRef = await addDoc(collection(db, "users"), information);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 }
 
-export function filterMajor(major)
+export async function getUser(email)
 {
-    const query = db
-      .collection("users")
-      .where('major', '==', major)
-      .where('type', '==', 'college')
-      .get();
-    if (query.empty) {
-    console.log('No matching documents.');
-    return;
-    }  
-    else{
-        var array = [];
-        query.forEach(user => {
-            array.push(user);
-          });
-        shuffle(array)
-        return array;
-    }
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const querySnapshot = await getDocs(q);
+  let user;
+  querySnapshot.forEach((doc) => {
+    user = doc.data();
+  })
+  return user;
+  //getUser('tonyxin@berkeley.edu').then((value) => console.log(value))
 }
 
-export function filterCollege(college)
+export async function filterMajor(major)
 {
-    const query = db
-      .collection("users")
-      .where('college', '==', college)
-      .where('type', '==', 'college')
-      .get();
-    if (query.empty) {
-    console.log('No matching documents.');
-    return;
-    }  
-    else{
-        var array = [];
-        query.forEach(user => {
-            array.push(user);
-          });
-        shuffle(array)
-        return array;
-    }
+  let user;
+  var array = [];
+
+  const q = query(collection(db, "users"), where("major", "==", major), where("type", "==", "college"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    user = doc.data();
+    array.push(user);
+  })
+  return array;
 }
 
-export function filterName(name)
+export async function filterCollege(college)
 {
-    const query = db
-      .collection("users")
-      .where('type', '==', 'college')
-      .get();
-    if (query.empty) {
-    console.log('No matching documents.');
-    return;
-    }
-    else{
-        var array = [];
-        query.forEach(user => {
-            if(user.name.contains(name))
-            {
-                array.push(user);
-            }
-          });
-        shuffle(array)
-        return array;
-    }
+  let user;
+  var array = [];
+
+  const q = query(collection(db, "users"), where("college", "==", college), where("type", "==", "college"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    user = doc.data();
+    array.push(user);
+  })
+  return array;
 }
 
-export function getRecommended(user)
+export async function filterName(name)
 {
-    const query = db
-      .collection("users")
-      .where('type', '==', 'college')
-      .where('major', '==', user.major)
-      .where('college', 'in', user.collegeList)
-      .where()
-      .get();
-    if (query.empty) {
-    console.log('No matching documents.');
-    return;
+  let user;
+  var array = [];
+
+  const q = query(collection(db, "users"), where("type", "==", "college"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    let fullName = doc.data().firstName + " " + doc.data().lastName;
+    if(fullName.includes(name))
+    {
+      user = doc.data();
+      array.push(user);
     }
-    else{
-        var array = [];
-        query.forEach(user => {
-            array.push(user)
-          });
-        shuffle(array)
-        return array;
-    }
+  })
+  return array;
+}
+
+export async function getRecommended(user)
+{
+  let temp;
+  var array = [];
+
+  let q = query(collection(db, "users"), where("major", "in", user.majorInterest), where("type", "==", "college"));
+  let querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    temp = doc.data();
+    array.push(temp);
+  })
+
+  let p = query(collection(db, "users"), where("college", "in", user.collegeList), where("type", "==", "college"));
+  let secondSnapshot = await getDocs(p);
+  secondSnapshot.forEach((doc) => {
+    temp = doc.data();
+    if(!array.includes(temp))
+      array.push(temp);
+  })
+
+  shuffle(array)
+  return array;
+  
 }
 
 export function shuffle(array) {

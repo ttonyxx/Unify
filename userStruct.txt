@@ -1,6 +1,5 @@
 /users/[uid]
 
-uid: 'Potato'
 firstName: 'Tony',
 lastName: 'Xin',
 type: 'college',
@@ -12,19 +11,15 @@ major: 'Electrical Engineering and Computer Science',
 imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
 rating: 4,
 reviewCount: 108,
-highSchool: '',
-collegeList: [],
 
-uid: 'Apple'
 firstName: 'Julian',
 lastName: 'Glass',
 type: 'high-school',
 mobile: '612-932-3438',
 email: 'julianglass@gmail.com',
 year: 'Sophmore',
-college: '',
-major: '',
-rating: 0,
-reviewCount: 0,
-highSchool: '',
+state: 'California',
+majorInterests: [],
+highSchool: 'Sunnyside High school',
 collegeList: ["UC Berkeley", "Harvard", "Stanford"]
+imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
