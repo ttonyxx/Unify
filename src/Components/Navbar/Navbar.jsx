@@ -7,14 +7,23 @@ import { GetAuthInfo } from '../Hooks/getData';
 import { logout } from "../../firebase";
 import { Button, Avatar } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom'
+import { getUser } from '../../utils'
 
 const Navbar = () => {
   const [user, loading, error] = GetAuthInfo();
   const [location, setLocation] = useState(useLocation());
+  const [userData, setUserData] = useState('');
   
 
   useEffect(() => {
-  }, [user, loading]);
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    getUser(user.email).then((val) => {
+        setUserData(val)
+    });
+  }, [user]);
 
   return (
     <Flex 
@@ -39,7 +48,7 @@ const Navbar = () => {
           Dashboard
         </Link>) : (<></>)
       }
-      {user && location.pathname != '/signin' ?
+      {user && location.pathname != '/signin' && userData.type=='high-school' ?
         (<Link to='/search'>
           Explore
         </Link>) : (<></>)
