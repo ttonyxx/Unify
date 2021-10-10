@@ -8,12 +8,19 @@ import {
     HStack,
     RadioGroup,
     FormHelperText,
-    Input
+    Input,
+    Flex,
+    Button
 } from "@chakra-ui/react"
 // theme.js
 // theme.js
 import { extendTheme } from "@chakra-ui/react"
 import { mode } from "@chakra-ui/theme-tools"
+import { addUser } from "../../utils"
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from '../../firebase'
 
 // Version 1: Using objects
 const theme = extendTheme({
@@ -101,12 +108,64 @@ export default function CollegeFields() {
         }
     };
 
+    const [user, loading, error] = useAuthState(auth)
+    const email = user.email;
+    const photoUrl = user.photoURL;
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [college, setCollege] = useState('');
+
+    const [grade, setGrade] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const history = useHistory();
+
+    const handleSubmit = () => {
+        console.log("Got here")
+        let major = "";
+        for(var i = 0; i < selectedItems.length; i++)
+        {
+          if(i > 0)
+          {
+            major += ", "
+          }
+          major += selectedItems[i].value
+        }
+        let mentor = {
+            firstName: firstName,
+            lastName: lastName,
+            type: 'college',
+            mobile: phoneNumber,
+            email: email,
+            year: grade,
+            college: college,
+            major: major,
+            imageUrl: photoUrl,
+            rating: 0,
+            reviewCount: 0,
+            };
+        console.log(mentor)
+        //addUser(mentor)
+        
+        history.replace("/dashboard");
+      };
+
     return (
         <div>
             <br />
+
+            <FormControl id="first-name" isRequired>
+              <FormLabel>First name</FormLabel>
+              <Input placeholder="First name" onChange={event => setFirstName(event.currentTarget.value)}/>
+            </FormControl>
+            <FormControl id="last-name" isRequired>
+                <FormLabel>Last name</FormLabel>
+                <Input placeholder="Last name" onChange={event => setLastName(event.currentTarget.value)}/>
+            </FormControl>
+
             <FormControl id="school" isRequired colorScheme="facebook">
                 <FormLabel>Search for your institution</FormLabel>
-                <Select placeholder="College/University">
+                <Select placeholder="College/University" onChange={event => setCollege(event.currentTarget.value)}>
                     <option>University of California Berkeley </option>
                     <option>University of California Santa Cruz </option>
                     <option>University of California Riverside </option>
@@ -125,7 +184,7 @@ export default function CollegeFields() {
             <br />
 
             <CUIAutoComplete
-                label="Select your major(s)"
+                label="Select your major"
                 placeholder="Start typing"
                 onCreateItem={handleCreateItem}
                 items={pickerItems}
@@ -137,7 +196,7 @@ export default function CollegeFields() {
 
             <FormControl as="fieldset" isRequired>
                 <FormLabel as="legend">Year in school</FormLabel>
-                <RadioGroup defaultValue="Itachi">
+                <RadioGroup defaultValue="Senior" onChange={event => setGrade(event.value)}>
                     <HStack spacing="50px">
                         <Radio value="Freshman">Freshman</Radio>
                         <Radio value="Sophomore">Sophomore</Radio>
@@ -149,8 +208,19 @@ export default function CollegeFields() {
             <br />
             <FormControl id="phone-number" isRequired>
                 <FormLabel>Phone Number</FormLabel>
-                <Input placeholder="(xxx) xxx - xxxx" />
+                <Input placeholder="(xxx) xxx - xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
             </FormControl>
+
+            <Flex
+              justifyContent = "center">
+              <Button 
+                  mt={4}
+                  onClick={handleSubmit}
+                  colorScheme="teal"
+                  type="submit">
+                  Signup
+              </Button>
+            </Flex>
 
             <br />
 

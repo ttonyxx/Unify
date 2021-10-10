@@ -51,7 +51,7 @@ export const StudentFields = (props) => {
             imageUrl: photoUrl,
             };
         console.log(student)
-        addUser(user)
+        addUser(student)
         
         history.replace("/dashboard");
     };
@@ -67,7 +67,7 @@ export const StudentFields = (props) => {
         </FormControl>
         <FormControl id="state" isRequired>
             <FormLabel>State</FormLabel>
-            <Select placeholder="Select state" onChange={event => setState(event.currentTarget.getAttribute)}> 
+            <Select placeholder="Select state" onChange={event => setState(event.currentTarget.value)}> 
                 <option>Alabama</option>
                 <option>Alaska</option>
                 <option>Arizona</option>
@@ -130,7 +130,7 @@ export const StudentFields = (props) => {
         </FormControl>
         <FormControl id="mobile" isRequired>
             <FormLabel>Phone Number</FormLabel>
-            <Input placeholder="123-456-7890" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
+            <Input placeholder="(xxx) xxx- xxxx" onChange={event => setPhoneNumber(event.currentTarget.value)}/>
         </FormControl>
         <Flex
             justifyContent = "center">
