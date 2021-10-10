@@ -32,6 +32,7 @@ import {
   Box
 } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -39,27 +40,32 @@ const mockStudentData = [
   {
     'name': 'Harvard',
     'date': '1640433600',
+    'chance': 'Safety',
     'status': 'Not Started'
   },
   {
     'name': 'Berkeley',
     'date': '1634033600',
-    'status': 'Not Started'
+    'chance': 'Reach',
+    'status': 'Drafted'
   },
   {
     'name': 'Tsinghua',
     'date': '1635033600',
+    'chance': 'Target',
     'status': 'Not Started'
   },
   {
     'name': 'DeVry',
     'date': '1635633600',
-    'status': 'Not Started'
+    'chance': 'Target',
+    'status': 'Done'
   },
   {
     'name': 'KAIST',
     'date': '1638533600',
-    'status': 'Not Started'
+    'chance': 'Reach',
+    'status': 'Started'
   }
 ];
 
@@ -70,8 +76,21 @@ const pickSelectColor = value => {
     case 'Started':
       return 'orange';
     case 'Drafted':
-      return 'khaki';
+      return '#FFAE00';
     case 'Done':
+      return 'green';
+    default:
+      return 'white'
+  }
+}
+
+const pickChanceColor = value => {
+  switch (value) {
+    case 'Reach':
+      return 'red';
+    case 'Target':
+      return '#FFAE00';
+    case 'Safety':
       return 'green';
     default:
       return 'white'
@@ -88,12 +107,32 @@ const timeLeftColor = days => {
   } else if (days <= 60) {
     return 'green'
   } else {
-    return 'gray'
+    return 'blue'
   }
 }
 
-const collegeAddSubmit = (data) => {
-  console.log(data);
+const ChanceSelectDropdown = ({ college }) => {
+
+  const [chanceColor, setChanceColor] = useState(pickChanceColor(college.chance));
+
+  const changeChanceColor = e => {
+    setChanceColor(pickChanceColor(e.target.value))
+  }
+
+  return (
+    <Select 
+      defaultValue={college.chance}
+      bg={chanceColor}
+      onChange={changeChanceColor}
+      color='white'
+    >
+      {['Safety', 'Target', 'Reach'].map((chance) => (
+        <option value={chance} style={{'color': 'black'}} >
+          {chance}
+        </option>
+      ))}
+    </Select>
+  )
 }
 
 const StatusSelectDropdown = ({ college }) => {
@@ -120,6 +159,15 @@ const StatusSelectDropdown = ({ college }) => {
   )
 }
 
+const sendCollegeData = (name, dueDate, chance) => {
+  mockStudentData.push({
+    'name': name,
+    'date': dueDate / 1000,
+    'chance': chance,
+    'status': 'Not Started'
+  })
+}
+
 const StudentDashboard = () => {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -127,8 +175,20 @@ const StudentDashboard = () => {
   const [date, setDate] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newCollegeDueDate, setNewCollegeDueDate] = useState(new Date());
+  const [newCollegeName, setNewCollegeName] = useState("")
+  const [newCollegeChance, setNewCollegeChance] = useState("Safety")
 
   const history = useHistory();
+
+  const collegeAddSubmit = () => {
+    console.log(newCollegeName)
+    sendCollegeData(newCollegeName, newCollegeDueDate, newCollegeChance);
+    console.log(newCollegeChance)
+    setNewCollegeDueDate(new Date());
+    setNewCollegeName("");
+    setNewCollegeChance("Safety");
+    onClose();
+  }
 
   useEffect(() => {
     setDate(Date.now());
@@ -138,10 +198,12 @@ const StudentDashboard = () => {
     }
     if (!user) history.replace("/signin");
   }, [user, loading, history]);
+
+
   return (
     <Flex
       flexDirection='column'
-      padding='0 10rem 0 10rem'
+      padding='0 10rem 5rem 10rem'
     >
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -149,31 +211,48 @@ const StudentDashboard = () => {
           <ModalHeader>Add College</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-          <FormControl id="collegeInfo">
-            <FormLabel>College Name</FormLabel>
-              <Input type="collegeName" />
-            <FormHelperText>Any college works!</FormHelperText>
-            <Box height='1rem' />
-            <FormLabel>Due Date</FormLabel>
-            <Box 
-              sx={{
-                'borderStyle': 'solid',
-                'borderColor': 'inherit',
-                'borderWidth': '1px',
-                'borderRadius': '5px',
-                'padding': '0.5rem',
-              }}
-            >
-              <DatePicker 
-                selected={newCollegeDueDate} 
-                onChange={(date) => setNewCollegeDueDate(date)} 
-              />
-            </Box>
-            <FormHelperText>Make sure to double check!</FormHelperText>
-            <Button colorScheme="blue" mr={3} onClick={collegeAddSubmit}>
-              Submit
-            </Button>
-          </FormControl>
+                  <FormControl 
+                    id="collegeInfo"
+                  >
+                    <FormLabel>College Name</FormLabel>
+                      <Input type="collegeName" onChange={(event)=>setNewCollegeName(event.target.value)}/>
+                    <FormHelperText>Any college works!</FormHelperText>
+                    <Box height='1rem' />
+                    <FormLabel>Due Date</FormLabel>
+                    <Box 
+                      sx={{
+                        'borderStyle': 'solid',
+                        'borderColor': 'inherit',
+                        'borderWidth': '1px',
+                        'borderRadius': '5px',
+                        'padding': '0.5rem',
+                      }}
+                    >
+                      <DatePicker 
+                        selected={newCollegeDueDate} 
+                        onChange={(date) => setNewCollegeDueDate(date)} 
+                      />
+                    </Box>
+                    <FormHelperText>Make sure to double check!</FormHelperText>
+                    <Box height='1rem' />
+                    <FormLabel>College Chance</FormLabel>
+                      <Select 
+                        onChange={(event)=>{setNewCollegeChance(event.target.value)}}
+                        defaultChecked="Safety"
+                        isRequired
+                      >
+                        {['Safety', 'Target', 'Reach'].map((chance) => (
+                          <option value={chance} style={{'color': 'black'}} >
+                            {chance}
+                          </option>
+                        ))}
+                      </Select>
+                     <FormHelperText>Be reasonable!</FormHelperText>
+                    <Box height='1rem' />
+                    <Button type='submit' colorScheme="blue" mr={3} onSubmit={collegeAddSubmit} onClick={collegeAddSubmit}>
+                      Submit
+                    </Button>
+                  </FormControl>
           </ModalBody>
 
           <ModalFooter>
@@ -197,7 +276,7 @@ const StudentDashboard = () => {
         Add College
       </Button>
 
-      <Table>
+      <Table variant="striped" colorScheme="gray">
         <Thead>
           <Tr>
             <Th>
@@ -210,6 +289,9 @@ const StudentDashboard = () => {
               Time Left
             </Th>
             <Th>
+              Chance
+            </Th>
+            <Th>
               Status
             </Th>
           </Tr>
@@ -220,7 +302,7 @@ const StudentDashboard = () => {
             const timeLeft = college.date * 1000 - date
             const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24))
             return (
-              <Tr>
+              <Tr key={college.name}>
                 <Td>
                   {college.name}
                 </Td>
@@ -231,6 +313,9 @@ const StudentDashboard = () => {
                   <Badge colorScheme={timeLeftColor(daysLeft)}>
                     {`${daysLeft} days left!`}
                   </Badge>
+                </Td>
+                <Td>
+                  <ChanceSelectDropdown college={college} />
                 </Td>
                 <Td>
                   <StatusSelectDropdown college={college} />
@@ -245,3 +330,39 @@ const StudentDashboard = () => {
 }
 
 export default StudentDashboard;
+
+/*
+<Formik>
+            <Form>
+              <Field>
+                <FormControl id="collegeInfo">
+                  <FormLabel>College Name</FormLabel>
+                    <Input type="collegeName" />
+                  <FormHelperText>Any college works!</FormHelperText>
+                  <Box height='1rem' />
+                  <FormLabel>Due Date</FormLabel>
+                  <Box 
+                    sx={{
+                      'borderStyle': 'solid',
+                      'borderColor': 'inherit',
+                      'borderWidth': '1px',
+                      'borderRadius': '5px',
+                      'padding': '0.5rem',
+                    }}
+                  >
+                    <DatePicker 
+                      selected={newCollegeDueDate} 
+                      onChange={(date) => setNewCollegeDueDate(date)} 
+                    />
+                  </Box>
+                  <FormHelperText>Make sure to double check!</FormHelperText>
+                  <Box height='1rem' />
+                  <Button colorScheme="blue" mr={3} onClick={collegeAddSubmit}>
+                    Submit
+                  </Button>
+                </FormControl>
+              </Field>
+            </Form>
+          </Formik>
+
+*/
