@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, Box, Tag, Image, Flex, Stack, Badge, Button, HStack, Divider} from "@chakra-ui/react"
 import { StarIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
-import {getUser, addUser, filterMajor, filterCollege, filterName, getRecommended} from '../../utils';
+import {getUser, addUser, filterMajor, filterCollege, filterName, getRecommended, setMajors, setColleges} from '../../utils';
 import { UserRefreshClient } from "google-auth-library";
 
 function Profile() {
@@ -28,12 +28,11 @@ function Profile() {
         mobile: '612-932-3438',
         email: 'julianglass@gmail.com',
         year: 'Sophmore',
-        college: '',
-        major: '',
-        rating: 0,
-        reviewCount: 0,
-        highSchool: '',
-        collegeList: ["University of California, Berkeley", "Harvard", "Stanford"]
+        state: 'California',
+        majorInterests: [],
+        highSchool: 'Sunnyside High school',
+        collegeList: [],
+        imageUrl: 'https://i.imgur.com/HkLY72h.jpg',
     };
     useEffect(() => {
         //user = getUser()
@@ -74,6 +73,8 @@ function Profile() {
                             Message
                         </Button>
                         <Button onClick={() => {
+                            //let array = ["Computer Science", "Economics"];
+                            //setMajors("julianglass@gmail.com", array)
                             //getUser('tonyxin@berkeley.edu').then((value) => console.log(value))
                         }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
