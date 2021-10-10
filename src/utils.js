@@ -123,8 +123,9 @@ export async function getMajorRecommended(user) {
 
   shuffle(array)
   return array;
+}
 
-  export async function setMajors(email, array)
+export async function setMajors(email, array)
 {
   const ref = doc(db, 'users', email);
   setDoc(ref, { majorInterests: array }, { merge: true });
@@ -150,4 +151,3 @@ export function shuffle(array) {
 
   return array;
 }
-
