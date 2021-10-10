@@ -178,6 +178,7 @@ const StudentDashboard = () => {
   const [newCollegeName, setNewCollegeName] = useState("")
   const [newCollegeChance, setNewCollegeChance] = useState("Safety")
 
+  const [studentData, setStudentData] = useState(user ? user.collegeList : [])
   const history = useHistory();
 
   const collegeAddSubmit = () => {
@@ -297,7 +298,7 @@ const StudentDashboard = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {mockStudentData.map((college) => {
+          {studentData.map((college) => {
             const dueDate = new Date(college.date * 1000)
             const timeLeft = college.date * 1000 - date
             const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24))
