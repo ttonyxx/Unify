@@ -145,7 +145,7 @@ export default function CollegeFields() {
             reviewCount: 0,
             };
         console.log(mentor)
-        //addUser(mentor)
+        addUser(mentor)
         
         history.replace("/dashboard");
       };

@@ -51,7 +51,7 @@ export const StudentFields = (props) => {
             imageUrl: photoUrl,
             };
         console.log(student)
-        //addUser(student)
+        addUser(student)
         
         history.replace("/dashboard");
     };
