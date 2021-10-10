@@ -145,6 +145,7 @@ export async function setMajors(email, array)
 
 export async function setColleges(email, array)
 {
+  console.log(array)
   const ref = doc(db, 'users', email);
   setDoc(ref, { collegeList: array }, { merge: true });
 }
