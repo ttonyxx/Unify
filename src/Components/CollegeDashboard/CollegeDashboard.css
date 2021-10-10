@@ -4,6 +4,8 @@
 
 .studentBox {
     transition: all 0.3s;
+    width: 220px;
+    min-width: 220px;
 }
 
 .studentBox:hover {
