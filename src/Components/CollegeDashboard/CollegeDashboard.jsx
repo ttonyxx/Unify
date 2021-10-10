@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth , logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { StudentBox } from "./StudentBox"
+import { StudentBox } from "../StudentBox"
 import { Text, Badge, Box, HStack, Tag, IconButton, VStack } from "@chakra-ui/react"
 import { ArrowRightIcon } from "@chakra-ui/icons"
 import './CollegeDashboard.css'
@@ -127,6 +127,7 @@ function CollegeDashboard() {
           <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue">When do you want to meet?</Badge></Text>
           <Text fontSize="xl" mb={1}><Badge fontSize="0.7em">Does 11am tomorrow work?</Badge></Text>
           <Text align="right" fontSize="xl" mb={1}><Badge fontSize="0.7em" colorScheme="blue">Yeah! See you then!</Badge></Text>
+          
           </DrawerBody>
 
           <DrawerFooter>

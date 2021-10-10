@@ -94,6 +94,37 @@ export async function getRecommended(user)
   
 }
 
+export async function getCollegeRecommended(user) {
+  let temp;
+  var array = [];
+
+  let p = query(collection(db, "users"), where("college", "in", user.collegeList), where("type", "==", "college"));
+  let secondSnapshot = await getDocs(p);
+  secondSnapshot.forEach((doc) => {
+    temp = doc.data();
+    if(!array.includes(temp))
+      array.push(temp);
+  })
+
+  shuffle(array)
+  return array;
+}
+
+export async function getMajorRecommended(user) {
+  let temp;
+  var array = [];
+
+  let q = query(collection(db, "users"), where("major", "in", user.majorInterest), where("type", "==", "college"));
+  let querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    temp = doc.data();
+    array.push(temp);
+  })
+
+  shuffle(array)
+  return array;
+}
+
 export function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
