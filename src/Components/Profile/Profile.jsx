@@ -74,7 +74,7 @@ function Profile() {
                             //let array = ["Computer Science", "Economics"];
                             //setMajors("julianglass@gmail.com", array)
                             //getUser('tonyxin@berkeley.edu').then((value) => console.log(value))
-                            addUser(user);
+                            //addUser(user);
                         }} rightIcon={<ArrowForwardIcon />} colorScheme="teal" variant="outline">
                             Connect
                         </Button>

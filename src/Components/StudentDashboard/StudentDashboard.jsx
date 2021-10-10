@@ -32,6 +32,7 @@ import {
   Box
 } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons'
+import { getUser, setColleges } from '../../utils'
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -49,19 +50,19 @@ const mockStudentData = [
     'status': 'Drafted'
   },
   {
-    'name': 'Tsinghua',
+    'name': 'Williams',
     'date': '1635033600',
     'chance': 'Target',
     'status': 'Not Started'
   },
   {
-    'name': 'DeVry',
+    'name': 'EveRy',
     'date': '1635633600',
     'chance': 'Target',
     'status': 'Done'
   },
   {
-    'name': 'KAIST',
+    'name': 'Berklee',
     'date': '1638533600',
     'chance': 'Reach',
     'status': 'Started'
@@ -126,7 +127,7 @@ const ChanceSelectDropdown = ({ college }) => {
       color='white'
     >
       {['Safety', 'Target', 'Reach'].map((chance) => (
-        <option value={chance} style={{'color': 'black'}} >
+        <option key={college.name} value={chance} style={{'color': 'black'}} >
           {chance}
         </option>
       ))}
@@ -150,7 +151,7 @@ const StatusSelectDropdown = ({ college }) => {
       color='white'
     >
       {['Not Started', 'Started', 'Drafted', "Done"].map((status) => (
-        <option value={status} style={{'color': 'black'}} >
+        <option key={college.name} value={status} style={{'color': 'black'}} >
           {status}
         </option>
       ))}
@@ -158,13 +159,14 @@ const StatusSelectDropdown = ({ college }) => {
   )
 }
 
-const sendCollegeData = (name, dueDate, chance) => {
-  mockStudentData.push({
+const sendCollegeData = (name, dueDate, chance, email, collegeList) => {
+  const newCollegeList = [...collegeList, {
     'name': name,
     'date': dueDate / 1000,
     'chance': chance,
     'status': 'Not Started'
-  })
+  }];
+  setColleges(email, newCollegeList);
 }
 
 const StudentDashboard = () => {
@@ -174,23 +176,29 @@ const StudentDashboard = () => {
   const [date, setDate] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newCollegeDueDate, setNewCollegeDueDate] = useState(new Date());
-  const [newCollegeName, setNewCollegeName] = useState("")
-  const [newCollegeChance, setNewCollegeChance] = useState("Safety")
+  const [newCollegeName, setNewCollegeName] = useState("");
+  const [newCollegeChance, setNewCollegeChance] = useState("Safety");
+  const [userData, setUserData] = useState({});
 
   const history = useHistory();
 
   const collegeAddSubmit = () => {
-    console.log(newCollegeName)
-    sendCollegeData(newCollegeName, newCollegeDueDate, newCollegeChance);
-    console.log(newCollegeChance)
+    sendCollegeData(newCollegeName, newCollegeDueDate, newCollegeChance, userData.email, userData.collegeList);
+
     setNewCollegeDueDate(new Date());
     setNewCollegeName("");
     setNewCollegeChance("Safety");
+    getUser(user.email).then((val) => {
+      setUserData(val);
+    })
     onClose();
   }
 
   useEffect(() => {
     setDate(Date.now());
+    getUser(user.email).then((val) => {
+      setUserData(val);
+    })
     if (loading) {
       // maybe trigger a loading screen
       return;
@@ -241,7 +249,7 @@ const StudentDashboard = () => {
                         isRequired
                       >
                         {['Safety', 'Target', 'Reach'].map((chance) => (
-                          <option value={chance} style={{'color': 'black'}} >
+                          <option key={chance} value={chance} style={{'color': 'black'}} >
                             {chance}
                           </option>
                         ))}
@@ -296,7 +304,7 @@ const StudentDashboard = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {mockStudentData.map((college) => {
+          {userData.collegeList && userData.collegeList.map((college) => {
             const dueDate = new Date(college.date * 1000)
             const timeLeft = college.date * 1000 - date
             const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24))

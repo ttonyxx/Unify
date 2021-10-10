@@ -131,7 +131,13 @@ export async function getRecommended(user)
     array.push(temp);
   })
 
-  let p = query(collection(db, "users"), where("college", "in", user.collegeList), where("type", "==", "college"));
+  var collegeArray = [];
+  for(let i = 0; i < user.collegeList.length; i++)
+  {
+    collegeArray.push(user.collegeList[i].name);
+  }
+
+  let p = query(collection(db, "users"), where("college", "in", collegeArray), where("type", "==", "college"));
   let secondSnapshot = await getDocs(p);
   secondSnapshot.forEach((doc) => {
     temp = doc.data();
@@ -148,7 +154,13 @@ export async function getCollegeRecommended(user) {
   let temp;
   var array = [];
 
-  let p = query(collection(db, "users"), where("college", "in", user.collegeList), where("type", "==", "college"));
+  var collegeArray = [];
+  for(let i = 0; i < user.collegeList.length; i++)
+  {
+    collegeArray.push(user.collegeList[i].name);
+  }
+
+  let p = query(collection(db, "users"), where("college", "in", collegeArray), where("type", "==", "college"));
   let secondSnapshot = await getDocs(p);
   secondSnapshot.forEach((doc) => {
     temp = doc.data();
@@ -175,13 +187,15 @@ export async function getMajorRecommended(user) {
   return array;
 }
 
-export async function setMajors(email, array) {
+export async function setMajors(email, array)
+{
   const ref = doc(db, 'users', email);
   setDoc(ref, { majorInterests: array }, { merge: true });
 }
 
 export async function setColleges(email, array)
 {
+  console.log(array)
   const ref = doc(db, 'users', email);
   setDoc(ref, { collegeList: array }, { merge: true });
 }

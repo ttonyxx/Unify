@@ -52,7 +52,7 @@ const Navbar = () => {
           Logout
           <Avatar
             size="xs"
-            ml={1}
+            ml={3}
             src={user.photoURL}
           />{" "}
         </Button>) : (<></>)
