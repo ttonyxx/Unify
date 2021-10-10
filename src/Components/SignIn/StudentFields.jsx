@@ -51,7 +51,7 @@ export const StudentFields = (props) => {
             imageUrl: photoUrl,
             };
         console.log(student)
-        addUser(student)
+        //addUser(student)
         
         history.replace("/dashboard");
     };
@@ -124,9 +124,16 @@ export const StudentFields = (props) => {
             <FormLabel>High School</FormLabel>
             <Input placeholder="Mountain View High School" onChange={event => setHighSchool(event.currentTarget.value)}/>
         </FormControl>
-        <FormControl id="grade" isRequired>
-            <FormLabel>Grade</FormLabel>
-            <Input placeholder="Senior" onChange={event => setGrade(event.currentTarget.value)}/>
+        <FormControl as="fieldset" isRequired>
+            <FormLabel as="legend">Year in school</FormLabel>
+            <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
+                <HStack spacing="50px">
+                    <Radio value="Freshman">Freshman</Radio>
+                    <Radio value="Sophomore">Sophomore</Radio>
+                    <Radio value="Junior">Junior</Radio>
+                    <Radio value="Senior">Senior</Radio>
+                </HStack>
+            </RadioGroup>
         </FormControl>
         <FormControl id="mobile" isRequired>
             <FormLabel>Phone Number</FormLabel>

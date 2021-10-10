@@ -196,7 +196,7 @@ export default function CollegeFields() {
 
             <FormControl as="fieldset" isRequired>
                 <FormLabel as="legend">Year in school</FormLabel>
-                <RadioGroup defaultValue="Senior" onChange={event => setGrade(event.value)}>
+                <RadioGroup defaultValue="Senior" onChange={event => setGrade(event)}>
                     <HStack spacing="50px">
                         <Radio value="Freshman">Freshman</Radio>
                         <Radio value="Sophomore">Sophomore</Radio>
