@@ -29,12 +29,16 @@ import {
   FormErrorMessage,
   FormHelperText,
   Input,
-  Box
+  Box,
+  UnorderedList,
+  ListItem,
+  Link as ChakraLink
 } from "@chakra-ui/react";
-import { AddIcon } from '@chakra-ui/icons'
+import { AddIcon, InfoOutlineIcon } from '@chakra-ui/icons'
 import { getUser, setColleges } from '../../utils'
 
 import "react-datepicker/dist/react-datepicker.css";
+import TuitionData from '../../assets/tuition.json'
 
 const mockStudentData = [
   {
@@ -74,11 +78,11 @@ const pickSelectColor = value => {
     case 'Not Started':
       return 'gray';
     case 'Started':
-      return 'orange';
-    case 'Drafted':
       return '#FFAE00';
-    case 'Done':
+    case 'Drafted':
       return 'green';
+    case 'Done':
+      return 'blue';
     default:
       return 'white'
   }
@@ -168,6 +172,172 @@ const sendCollegeData = (name, dueDate, chance, email, collegeList) => {
   }];
   setColleges(email, newCollegeList);
 }
+
+const FinancesModal = ({college}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [collegeData, setCollegeData] = useState({
+    "name": "University of Southern California",
+    "state": "California",
+    "state_code": "CA",
+    "type": "Private",
+    "degree_length": "4 Year",
+    "room_and_board": 15395,
+    "in_state_tuition": 56225,
+    "in_state_total": 71620,
+    "out_of_state_tuition": 56225,
+    "out_of_state_total": 71620
+  }) 
+  const [loanAmount, setLoanAmount] = useState(5000);
+  const [interestRate, setInterestRate] = useState(5.5);
+  const [loanTerms, setLoanTerms] = useState(10);
+
+  useEffect(() => { 
+    setCollegeData(TuitionData.find(element => element.name === college.name))
+    if (collegeData === {}){
+      setCollegeData({
+        "name": "University of Southern California",
+        "state": "California",
+        "state_code": "CA",
+        "type": "Private",
+        "degree_length": "4 Year",
+        "room_and_board": 15395,
+        "in_state_tuition": 56225,
+        "in_state_total": 71620,
+        "out_of_state_tuition": 56225,
+        "out_of_state_total": 71620
+      })
+    }
+  }, [college.name, collegeData]);
+
+  return(
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent
+        sx={{
+          'minWidth': "70rem",
+        }}
+      >
+        <ModalHeader>Finances for {college.name}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Text>
+            {collegeData.name} is a {collegeData.degree_length.toLowerCase()} {collegeData.type.toLowerCase()} institution in {collegeData.state}.
+            Here are some statistics on expected costs if you choose to attend this institution.
+          </Text>
+          <Box height='1rem' />
+
+            <Table variant="striped" colorScheme="gray">
+              <Thead>
+                <Tr>
+                  <Th>
+                    Location
+                  </Th>
+                  <Th isNumeric>
+                    Tuition / Yr
+                  </Th>
+                  <Th isNumeric>
+                    Room and Board / Yr
+                  </Th >
+                  <Th isNumeric>
+                    Total Costs / Yr
+                  </Th>
+                  <Th isNumeric>
+                    Total Over {collegeData.degree_length}s
+                  </Th>
+                  <Th isNumeric>
+                    Total Costs / Semester
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>
+                    In State 
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.in_state_tuition}
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.room_and_board}   
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.in_state_total}
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.in_state_total*parseInt(collegeData.degree_length.split(" ")[0])}
+                  </Td>
+                  <Td isNumeric>
+                    ${Math.floor(collegeData.in_state_total / 2)}
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    Out of State
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.out_of_state_tuition}
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.room_and_board}   
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.out_of_state_total}
+                  </Td>
+                  <Td isNumeric>
+                    ${collegeData.out_of_state_total*parseInt(collegeData.degree_length.split(" ")[0])}
+                  </Td>
+                  <Td isNumeric>
+                    ${Math.floor(collegeData.out_of_state_total / 2)}
+                  </Td>
+                </Tr>
+              </Tbody>
+            </Table>
+            <Box height='1rem' />
+
+            <UnorderedList>
+              <ListItem>To help pay for tuition, <ChakraLink color='teal.500' href="https://studentaid.gov/h/apply-for-aid/fafsa">FAFSA</ChakraLink > is your best friend for financial aid.  </ListItem>
+              <ListItem>Resources like <ChakraLink href="https://www.scholarships.com/" color='teal.500'>Scholarships.com</ChakraLink>, an aggregator of additional scholarships that you can apply for, can be useful in finding opportunities to fund college.</ListItem>
+              <ListItem>Your <Link to='/search'>Unify connections</Link> can also help with advice on factoring in living costs, which may influence how much money you'll need for college.</ListItem>
+              <ListItem>The loan calculator below can help you gauge how much you will have to pay each month to repay your student loans.</ListItem>
+              <ListItem>Ultimately, it is up to you and your family to make the best financial decisions in regards to college.              We hope that Unify can be a helpful tool during this time!</ListItem>
+            </UnorderedList>
+            <Text fontSize="xl" padding='1.5rem 0 1rem 0'>Loan Calculator</Text>
+            <FormControl>
+              <FormLabel>Loan Amount</FormLabel>
+              <Input defaultValue={loanAmount} type="collegeName" onChange={(event)=>setLoanAmount(parseInt(event.target.value))}/>
+              <FormHelperText>In dollars ($)</FormHelperText>
+              <Box height='1rem' />
+              <FormLabel>Interest Rate</FormLabel>
+              <Input defaultValue={interestRate} type="collegeName" onChange={(event)=>setInterestRate(parseInt(event.target.value))}/>
+              <FormHelperText>In percentage (%)</FormHelperText>
+              <Box height='1rem' />
+              <FormLabel>Loan Terms</FormLabel>
+              <Input defaultValue={loanTerms} type="collegeName" onChange={(event)=>setLoanTerms(parseInt(event.target.value))}/>
+              <FormHelperText>In years</FormHelperText>
+              <Box height='1rem' />
+            </FormControl>
+            <Text>Your monthly payment would be <Badge fontSize="xl" colorScheme='green'>${Math.round(loanAmount*(interestRate/1200 + ((interestRate/1200)/(Math.pow(1+(interestRate/1200), loanTerms*12)-1)))*100)/100}</Badge>!</Text>
+        </ModalBody>
+
+        <ModalFooter>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+
+    <Button 
+      onClick={onOpen}
+      colorScheme="green"
+      leftIcon={<InfoOutlineIcon />}
+      sx={{
+      }}
+    >
+      Info
+    </Button>
+  </>
+  )
+}
+
 
 const StudentDashboard = () => {
   // const [email, setEmail] = useState("");
@@ -301,6 +471,9 @@ const StudentDashboard = () => {
             <Th>
               Status
             </Th>
+            <Th>
+              Finances
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -326,6 +499,9 @@ const StudentDashboard = () => {
                 </Td>
                 <Td>
                   <StatusSelectDropdown college={college} />
+                </Td>
+                <Td> 
+                  <FinancesModal college={college} />
                 </Td>
               </Tr>
             )
