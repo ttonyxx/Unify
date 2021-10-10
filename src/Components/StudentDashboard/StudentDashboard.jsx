@@ -302,7 +302,7 @@ const FinancesModal = ({college}) => {
               <ListItem>The loan calculator below can help you gauge how much you will have to pay each month to repay your student loans.</ListItem>
               <ListItem>Ultimately, it is up to you and your family to make the best financial decisions in regards to college.              We hope that Unify can be a helpful tool during this time!</ListItem>
             </UnorderedList>
-            <Text fontSize="3xl" padding='1.5rem 0 1rem 0'>Loan Calculator</Text>
+            <Text fontSize="xl" padding='1.5rem 0 1rem 0'>Loan Calculator</Text>
             <FormControl>
               <FormLabel>Loan Amount</FormLabel>
               <Input defaultValue={loanAmount} type="collegeName" onChange={(event)=>setLoanAmount(parseInt(event.target.value))}/>
