@@ -109,7 +109,7 @@ export async function setColleges(email, array)
 export function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
 
-  while (currentIndex != 0) {
+  while (currentIndex !== 0) {
 
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
