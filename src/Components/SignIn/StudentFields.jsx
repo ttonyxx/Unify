@@ -50,8 +50,10 @@ const majors = [
     { value: "Korean", label: "Korean" },
     { value: "Law", label: "Law" },
     { value: "Management", label: "Management" },
+    { value: "Math", label: "Math" },
     { value: "Neuroscience", label: "Neuroscience" },
     { value: "Optometry", label: "Optometry" },
+    { value: "Physics", label: "Physics" },
     { value: "Psychology", label: "Psychology" },
     { value: "Public Health", label: "Public Health" },
     { value: "Sociology", label: "Sociology" },
@@ -200,7 +202,7 @@ export const StudentFields = (props) => {
         </FormControl>
         <CUIAutoComplete
                 margin = "1rem 0rem 1rem 0rem"
-                label="Select your major"
+                label="Select your major interests"
                 placeholder="Start typing"
                 onCreateItem={handleCreateItem}
                 items={pickerItems}

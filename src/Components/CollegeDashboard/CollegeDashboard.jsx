@@ -182,6 +182,7 @@ function CollegeDashboard({ sendMessage }) {
               variant="outline" 
               type="text" 
               placeholder="Enter your message"
+              autocomplete="false"
               onChange={(e)=>setValue(e.target.value)} />
               <Button colorScheme="teal" type="submit">Send</Button>
         </Stack>

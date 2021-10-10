@@ -176,7 +176,7 @@ export async function getMajorRecommended(user) {
   let temp;
   var array = [];
 
-  let q = query(collection(db, "users"), where("major", "in", user.majorInterest), where("type", "==", "college"));
+  let q = query(collection(db, "users"), where("major", "in", user.majorInterests), where("type", "==", "college"));
   let querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     temp = doc.data();
