@@ -4,7 +4,8 @@ import * as React from 'react'
 import './CollegeDashboard/CollegeDashboard.css'
 
 export const StudentBox = (props) => (
-    <Box w="220px" borderWidth="1px" borderRadius="lg" overflow="hidden" className="studentBox">
+  <a href="profile">
+    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" className="studentBox" mr={3} >
     <Image boxSize="220px" src={props.imageUrl} />
 
     <Box p="2">
@@ -38,4 +39,5 @@ export const StudentBox = (props) => (
       
     </Box>
   </Box>
+  </a>
 )

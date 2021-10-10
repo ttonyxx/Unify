@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth , logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Flex, Input, Text, Select, HStack} from "@chakra-ui/react";
-import { getCollegeRecommended, getRecommended, getMajorRecommended, getUser } from "../../utils";
+import { Flex, Input, Text, Select, Box, WrapItem, Wrap } from "@chakra-ui/react";
+import { getCollegeRecommended, getRecommended, getMajorRecommended, getUser, filterCollege, filterMajor } from "../../utils";
 import { StudentBox } from "../StudentBox"
 import {
     Drawer,
@@ -23,6 +23,7 @@ function Search() {
   const [user, loading, error] = useAuthState(auth);
   const [studentItems, setStudentItems] = useState([])
   const [userData, setUserData] = useState(null)
+  const [searching, setSearching] = useState(false)
   const history = useHistory();
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,17 +45,31 @@ function Search() {
     });
   }, [user]);
 
-  
+  function searchFor(searchVal) {
+      if (searchVal != '') {
+          setSearching(true)
+      }
+      users = []
+    filterCollege(searchVal).then((val) => {
+        users = val
+        filterMajor(searchVal).then((val) => {
+            if (val.length != 0) users = val
+            updateStudentItems()
+        })
+    })
+    
+  }
 
   function getRecommended(rec) {
+      users = []
       if (userData) {
         if (rec == 'colleges') {
-            console.log("Getting with " + userData)
             getCollegeRecommended(userData).then((val) => {
                 users = val
                 updateStudentItems()
             })
         } else {
+            console.log(userData)
             getMajorRecommended(userData).then((val) => {
                 users = val
                 updateStudentItems()
@@ -70,7 +85,7 @@ function Search() {
   
   function updateStudentItems() {
     setStudentItems(users.map((client) => 
-        <StudentBox setChatName={setChatName} onOpen={onOpen} btnRef={btnRef} key={client.email} imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.college} grade={client.year} major={client.major}></StudentBox>
+        <WrapItem><StudentBox setChatName={setChatName} onOpen={onOpen} btnRef={btnRef} key={client.email} imageUrl={client.imageUrl} firstName={client.firstName} lastName={client.lastName} highschool={client.college} grade={client.year} major={client.major}></StudentBox></WrapItem>
     ))
   }
 
@@ -91,28 +106,37 @@ function Search() {
         flexDirection='row'
         alignItems="center"
         >
-            <Input height="60px" fontSize="30px" colorScheme="blue" focusBorderColor="blue.500" placeholder="Search " />
+            <Input height="60px" fontSize="30px" colorScheme="blue" focusBorderColor="blue.500" placeholder="Search " onChange={event => {
+                searchFor(event.currentTarget.value)
+                
+                }}  
+            
+            />
 
             
         </Flex>
-        <Flex
-        flexDirection='row'
-        alignItems="left"
-        >
-            <Text fontSize="3xl" mt={5}>Recommendations by
-            </Text>
-            <Select width="150px" mt={6} ml={2} onChange={event => {
-                getRecommended(event.currentTarget.value)
-                
-                }}>
-                <option default value="colleges">Colleges 🏫</option>
-                <option value="major">Major 📚</option>
-            </Select>
-        </Flex>
+        {
+        !searching ?
+        (<Flex
+            flexDirection='row'
+            alignItems="left"
+            >
+                <Text fontSize="3xl" mt={5}>Recommendations by
+                </Text>
+                <Select width="150px" mt={6} ml={2} onChange={event => {
+                    getRecommended(event.currentTarget.value)
+                    
+                    }}>
+                    <option default value="colleges">Colleges 🏫</option>
+                    <option value="major">Major 📚</option>
+                </Select>
+            </Flex>)
+       : (<></>)}
+        
 
-        <HStack spacing="10px" mt={2}>
+        <Wrap mt={3}>
                 {studentItems}
-        </HStack>
+        </Wrap>
 
             <Drawer
         isOpen={isOpen}

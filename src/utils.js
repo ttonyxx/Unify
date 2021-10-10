@@ -28,6 +28,38 @@ export async function filterMajor(major)
   let user;
   var array = [];
 
+  const q = query(collection(db, "users"), where("type", "==", "college"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    let userMajor = doc.data().major.toLowerCase();
+    if(userMajor.includes(major.toLowerCase()))
+    {
+      user = doc.data();
+      array.push(user);
+    }
+  })
+  return array;
+}
+
+export async function getHighSchoolers()
+{
+  let user;
+  var array = [];
+
+  const q = query(collection(db, "users"), where("type", "==", "high-school"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    user = doc.data();
+    array.push(user);
+  })
+  return array;
+}
+
+export async function filterMajorExact(major)
+{
+  let user;
+  var array = [];
+
   const q = query(collection(db, "users"), where("major", "==", major), where("type", "==", "college"));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
@@ -38,6 +70,24 @@ export async function filterMajor(major)
 }
 
 export async function filterCollege(college)
+{
+  let user;
+  var array = [];
+
+  const q = query(collection(db, "users"), where("type", "==", "college"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    let userCollege = doc.data().college.toLowerCase();
+    if(userCollege.includes(college.toLowerCase()))
+    {
+      user = doc.data();
+      array.push(user);
+    }
+  })
+  return array;
+}
+
+export async function filterCollegeExact(college)
 {
   let user;
   var array = [];
@@ -59,8 +109,8 @@ export async function filterName(name)
   const q = query(collection(db, "users"), where("type", "==", "college"));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    let fullName = doc.data().firstName + " " + doc.data().lastName;
-    if(fullName.includes(name))
+    let fullName = doc.data().firstName.toLowerCase() + " " + doc.data().lastName.toLowerCase();
+    if(fullName.includes(name.toLowerCase()))
     {
       user = doc.data();
       array.push(user);
@@ -126,7 +176,7 @@ export async function getMajorRecommended(user) {
   let temp;
   var array = [];
 
-  let q = query(collection(db, "users"), where("major", "in", user.majorInterest), where("type", "==", "college"));
+  let q = query(collection(db, "users"), where("major", "in", user.majorInterests), where("type", "==", "college"));
   let querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     temp = doc.data();
